@@ -147,7 +147,7 @@ export default function Hero({ locale = "en" }: HeroProps) {
           {/* CTA Button */}
           <Link
             href="#contact-form"
-            className="min-w-sm inline-block font-handwritten text-xl bg-sugarcane-green hover:bg-emerald-700 text-white font-semibold px-8 py-3 rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl"
+            className="inline-flex w-full max-w-xs sm:w-auto sm:min-w-sm justify-center font-handwritten text-xl bg-sugarcane-green hover:bg-emerald-700 text-white font-semibold px-8 py-3 rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl"
           >
             {t.cta}
           </Link>
