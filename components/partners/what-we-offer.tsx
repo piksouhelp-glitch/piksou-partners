@@ -1,14 +1,14 @@
-import Image from "next/image"
+import Image from "next/image";
 
 interface Pillar {
-  iconImage: string
-  title: string
-  description: string
-  image: string
+  iconImage: string;
+  title: string;
+  description: string;
+  image: string;
 }
 
 interface PillarsProps {
-  locale?: "en" | "fr"
+  locale?: "en" | "fr";
 }
 
 const contentEn = {
@@ -41,7 +41,7 @@ const contentEn = {
       image: "/images/partners/what-we-offer/push-notification.png",
     },
   ] as Pillar[],
-}
+};
 
 const contentFr = {
   sectionLabel: "Ce Que Nous Offrons",
@@ -73,10 +73,10 @@ const contentFr = {
       image: "/images/partners/what-we-offer/push-notification.png",
     },
   ] as Pillar[],
-}
+};
 
 export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
-  const content = locale === "fr" ? contentFr : contentEn
+  const content = locale === "fr" ? contentFr : contentEn;
 
   return (
     <section
@@ -136,12 +136,26 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
           </p>
           <h2 className="font-sans text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
             {content.sectionTitle}{" "}
-            <span className="handwritten text-sugarcane-green dark:text-emerald-400">{content.sectionTitleHighlight}</span>{" "}
+            <span className="handwritten text-sugarcane-green dark:text-emerald-400">
+              {content.sectionTitleHighlight}
+            </span>{" "}
             {content.sectionTitleEnd}{" "}
             <span className="relative inline-block">
-              <span className="handwritten text-sugarcane-green dark:text-emerald-400">{content.sectionTitleUnderline}</span>
-              <svg className="absolute -bottom-1 left-0 w-full" viewBox="0 0 100 8" preserveAspectRatio="none">
-                <path d="M0 7 Q 25 0, 50 4 T 100 3" stroke="currentColor" strokeWidth="2" fill="none" className="text-emerald-400" />
+              <span className="handwritten text-sugarcane-green dark:text-emerald-400">
+                {content.sectionTitleUnderline}
+              </span>
+              <svg
+                className="absolute -bottom-1 left-0 w-full"
+                viewBox="0 0 100 8"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M0 7 Q 25 0, 50 4 T 100 3"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  fill="none"
+                  className="text-emerald-400"
+                />
               </svg>
             </span>{" "}
             {content.sectionSubtitle}
@@ -177,13 +191,21 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
               {/* Image/Mockup - Middle one is larger */}
               <div className="flex-1 flex items-end justify-center">
                 <div
-                  className={`relative ${index === 1 ? "w-full overflow-hidden h-[19rem] md:h-[25rem] lg:h-[30rem] -translate-y-3 md:-translate-y-7 lg:-translate-y-8" : "w-[92%] md:w-[90%] h-64 md:h-80 lg:h-96"}`}
+                  className={`relative ${
+                    index === 1
+                      ? "w-full overflow-hidden h-[19rem] md:h-[25rem] lg:h-[30rem] -translate-y-3 md:-translate-y-7 lg:-translate-y-8"
+                      : "w-[92%] md:w-[90%] h-64 md:h-80 lg:h-96"
+                  }`}
                 >
                   <Image
                     src={pillar.image}
                     alt={pillar.title}
                     fill
-                    className={index === 1 ? "object-contain scale-[1.1] md:scale-[1.15] lg:scale-[1.18] translate-y-4 md:translate-y-5" : "object-contain"}
+                    className={
+                      index === 1
+                        ? "object-contain scale-[1.1] md:scale-[1.15] lg:scale-[1.18] translate-y-4 md:translate-y-5"
+                        : "object-contain"
+                    }
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                   />
                 </div>
@@ -193,5 +215,5 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
         </div>
       </div>
     </section>
-  )
+  );
 }
