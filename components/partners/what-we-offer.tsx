@@ -24,7 +24,7 @@ const contentEn = {
       title: "Increased Visibility",
       description:
         "We partner directly with stores to increase visibility of their promotions, drive traffic and generate revenue.",
-      image: "/images/partners/what-we-offer/app.svg",
+      image: "/images/partners/what-we-offer/visiblity.png",
     },
     {
       iconImage: "/images/partners/what-we-offer/stastics-icon.png",
@@ -194,6 +194,8 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
                   className={`relative ${
                     index === 1
                       ? "w-full overflow-hidden h-[19rem] md:h-[25rem] lg:h-[30rem] -translate-y-3 md:-translate-y-7 lg:-translate-y-8"
+                      : index === 0
+                      ? "w-full md:w-full lg:w-[108%] h-72 md:h-96 lg:h-[26rem]"
                       : "w-[92%] md:w-[90%] h-64 md:h-80 lg:h-96"
                   }`}
                 >
