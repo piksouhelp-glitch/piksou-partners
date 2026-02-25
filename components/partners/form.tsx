@@ -500,7 +500,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                       onFocus={() => handleFocus("commercialName")}
                       onBlur={handleBlur}
                       className={inputClasses("commercialName")}
-                      placeholder={t.placeholders.commercialName}
                     />
                   </motion.div>
                   <AnimatePresence>
@@ -529,7 +528,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                       onFocus={() => handleFocus("legalName")}
                       onBlur={handleBlur}
                       className={inputClasses("legalName")}
-                      placeholder={t.placeholders.legalName}
                     />
                   </motion.div>
                   <AnimatePresence>
@@ -560,7 +558,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                       onFocus={() => handleFocus("contactName")}
                       onBlur={handleBlur}
                       className={inputClasses("contactName")}
-                      placeholder={t.placeholders.contactName}
                     />
                   </motion.div>
                   <AnimatePresence>
@@ -589,7 +586,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                       onFocus={() => handleFocus("role")}
                       onBlur={handleBlur}
                       className={inputClasses("role")}
-                      placeholder={t.placeholders.role}
                     />
                   </motion.div>
                   <AnimatePresence>
@@ -620,7 +616,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                       onFocus={() => handleFocus("email")}
                       onBlur={handleBlur}
                       className={inputClasses("email")}
-                      placeholder={t.placeholders.email}
                     />
                   </motion.div>
                   <AnimatePresence>
@@ -701,7 +696,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                         onFocus={() => handleFocus("phone")}
                         onBlur={handleBlur}
                         className="block w-full pl-16 pr-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
-                        placeholder={t.placeholders.phone}
                       />
                     </motion.div>
                   </div>
@@ -748,7 +742,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                         onFocus={() => handleFocus("whatsapp")}
                         onBlur={handleBlur}
                         className="block w-full pl-16 pr-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
-                        placeholder={t.placeholders.whatsapp}
                       />
                     </motion.div>
                   </div>
@@ -787,7 +780,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                       transition-all duration-200
                       ${errors.message ? "border-red-500" : "border-gray-300 dark:border-gray-600"}
                     `}
-                    placeholder={t.placeholders.message}
                   />
                 </motion.div>
                 <AnimatePresence>

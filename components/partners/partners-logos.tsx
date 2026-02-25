@@ -65,24 +65,24 @@ export default function PartnersPageLogos({ locale = "en" }: PartnersPageLogosPr
         </FadeIn>
 
         {/* Infinite Scrolling Partner Logos */}
-        <div className="w-full overflow-hidden">
+        {/* <div className="w-full overflow-hidden">
           <div className="flex animate-scroll">
             {partners.map((partner, index) => (
-              <div
-                key={`first-${index}`}
-                className="flex-shrink-0 mx-8 md:mx-12 w-28 h-20 md:w-36 md:h-24 relative"
-              >
-                <Image
-                  src={partner.logo}
-                  alt={partner.name}
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 768px) 112px, 144px"
-                />
-              </div>
-            ))}
+              // <div
+              //   key={`first-${index}`}
+              //   className="flex-shrink-0 mx-8 md:mx-12 w-28 h-20 md:w-36 md:h-24 relative"
+              // >
+              //   <Image
+              //     src={partner.logo}
+              //     alt={partner.name}
+              //     fill
+              //     className="object-contain"
+              //     sizes="(max-width: 768px) 112px, 144px"
+              //   />
+              // </div>
+            ))} */}
             {/* Duplicate for seamless loop */}
-            {partners.map((partner, index) => (
+            {/* {partners.map((partner, index) => (
               <div
                 key={`second-${index}`}
                 className="flex-shrink-0 mx-8 md:mx-12 w-28 h-20 md:w-36 md:h-24 relative"
@@ -95,9 +95,9 @@ export default function PartnersPageLogos({ locale = "en" }: PartnersPageLogosPr
                   sizes="(max-width: 768px) 112px, 144px"
                 />
               </div>
-            ))}
-          </div>
-        </div>
+            ))} */}
+          {/* </div> */}
+        {/* </div> */}
       </div>
 
       <style jsx>{`

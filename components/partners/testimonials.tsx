@@ -144,7 +144,7 @@ export default function Testimonials({ locale = "en" }: WhyProps) {
           </div>
 
           {/* Testimonials Carousel */}
-          <div className="relative">
+          {/* <div className="relative">
             <div className="flex items-center justify-center gap-4 md:gap-6">
               {/* Previous Button */}
               <button
@@ -156,7 +156,7 @@ export default function Testimonials({ locale = "en" }: WhyProps) {
               </button>
 
               {/* Testimonial Cards */}
-              <div className="flex items-center justify-center gap-4 md:gap-6 overflow-hidden">
+              {/* <div className="flex items-center justify-center gap-4 md:gap-6 overflow-hidden">
                 {t.testimonials.map((testimonial, index) => {
                   const isActive = index === currentIndex
                   const isPrev = index === (currentIndex === 0 ? t.testimonials.length - 1 : currentIndex - 1)
@@ -180,9 +180,9 @@ export default function Testimonials({ locale = "en" }: WhyProps) {
                       <div className={`
                         bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200 dark:border-gray-700 relative overflow-hidden flex flex-col
                         ${isActive ? "w-[320px] md:w-[480px] h-[280px] md:h-[320px]" : "w-64 md:w-80 h-[280px] md:h-[320px]"}
-                      `}>
+                      `}> */}
                         {/* Gradient blur overlay for inactive cards */}
-                        {!isActive && (
+                        {/* {!isActive && (
                           <div
                             className={`absolute inset-0 z-10 pointer-events-none
                               ${isPrev
@@ -191,10 +191,10 @@ export default function Testimonials({ locale = "en" }: WhyProps) {
                               }
                             `}
                           />
-                        )}
+                        )} */}
 
                         {/* Logo */}
-                        <div className="flex justify-center mb-4">
+                        {/* <div className="flex justify-center mb-4">
                           <div className="w-12 h-12 relative">
                             <Image
                               src={testimonial.logo}
@@ -203,18 +203,18 @@ export default function Testimonials({ locale = "en" }: WhyProps) {
                               className="object-contain"
                             />
                           </div>
-                        </div>
+                        </div> */}
 
                         {/* Quote */}
-                        <blockquote className={`
+                        {/* <blockquote className={`
                           handwritten text-center text-black font-bold dark:text-gray-300 flex-grow flex items-center justify-center
                           ${isActive ? "text-base md:text-lg" : "text-sm"}
                         `}>
                           <span>"{testimonial.quote}"</span>
-                        </blockquote>
+                        </blockquote> */}
 
                         {/* Author */}
-                        <div className={`text-center mt-4 ${!isActive ? "opacity-70" : ""}`}>
+                        {/* <div className={`text-center mt-4 ${!isActive ? "opacity-70" : ""}`}>
                           <p className="font-sans text-sm font-medium text-sugarcane-green dark:text-white">
                             - {testimonial.author}, {testimonial.company}
                           </p>
@@ -223,20 +223,20 @@ export default function Testimonials({ locale = "en" }: WhyProps) {
                     </div>
                   )
                 })}
-              </div>
+              </div> */}
 
               {/* Next Button */}
-              <button
+              {/* <button
                 onClick={goToNext}
                 className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors z-20"
                 aria-label="Next testimonial"
               >
                 <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-gray-600 dark:text-gray-400" />
               </button>
-            </div>
+            </div> */}
 
             {/* Dots Indicator */}
-            <div className="flex justify-center gap-2 mt-8">
+            {/* <div className="flex justify-center gap-2 mt-8">
               {t.testimonials.map((_, index) => (
                 <button
                   key={index}
@@ -250,7 +250,7 @@ export default function Testimonials({ locale = "en" }: WhyProps) {
                 />
               ))}
             </div>
-          </div>
+          </div> */}
         </FadeIn>
       </div>
     </section>
