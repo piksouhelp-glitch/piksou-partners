@@ -21,8 +21,8 @@ const content = {
     cta: "Contact Us",
     stats: [
       { value: "15", suffix: "+", label: "Stores Listed", icon: "/images/partners/hero/stores-logo.svg" },
-      { value: "5000", suffix: "+", label: "Active Users", icon: "/images/partners/hero/customer-logo.svg" },
-      { value: "1000", suffix: "+", label: "Deals Compared Daily", icon: "/images/partners/hero/partner-logo.svg" },
+      { value: "6500", suffix: "+", label: "Active Users", icon: "/images/partners/hero/customer-logo.svg" },
+      { value: "5000", suffix: "+", label: "Deals Compared Daily", icon: "/images/partners/hero/partner-logo.svg" },
     ],
   },
   fr: {
@@ -38,8 +38,8 @@ const content = {
     cta: "Contactez-nous",
     stats: [
       { value: "15", suffix: "+", label: "Magasins Listés", icon: "/images/partners/hero/stores-logo.svg" },
-      { value: "5000", suffix: "+", label: "Utilisateurs Actifs", icon: "/images/partners/hero/customer-logo.svg" },
-      { value: "1000", suffix: "+", label: "Offres Comparées par Jour", icon: "/images/partners/hero/partner-logo.svg" },
+      { value: "6500", suffix: "+", label: "Utilisateurs Actifs", icon: "/images/partners/hero/customer-logo.svg" },
+      { value: "5000", suffix: "+", label: "Offres Comparées par Jour", icon: "/images/partners/hero/partner-logo.svg" },
     ],
   },
 }
@@ -138,9 +138,9 @@ export default function Hero({ locale = "en" }: HeroProps) {
 
           {/* Subtitle */}
           <p className="font-sans text-xl md:text-2xl text-black dark:text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
-            <span className="font-bold text-black dark:text-white">{t.subtitleBold1}</span>{" "}
+            <span className="font-bold text-black dark:text-sugarcane-green dark:font-extrabold">{t.subtitleBold1}</span>{" "}
             {t.subtitleNormal1}{" "}
-            <span className="font-bold text-black dark:text-white">{t.subtitleBold2}</span>{" "}
+            <span className="font-bold text-black dark:text-sugarcane-green dark:font-extrabold">{t.subtitleBold2}</span>{" "}
             {t.subtitleNormal2}
           </p>
 
