@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-
+import Image from "next/image"
 import { useMemo, useState } from "react"
 import { motion, AnimatePresence, type Variants } from "framer-motion"
 import { Send, CheckCircle, AlertCircle, User, Mail, MessageSquare, Building2, Briefcase, Globe } from "lucide-react"
@@ -353,11 +353,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
         payload.phone = `${phoneDialCode} ${formData.phone}`
       }
 
-      const result = await apiService.sendSupportMessage(payload)
-
-      if (!result.success) {
-        throw new Error(result.error || "Failed to submit inquiry.")
-      }
 
       setIsSubmitted(true)
       setFormData({
@@ -409,7 +404,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
 
   const selectClasses = (fieldName: keyof PartnerFormErrors) => `
     block w-full pl-10 pr-3 py-3 border rounded-lg
-    bg-gray-50 dark:bg-gray-700
+    bg-white dark:bg-gray-700
     text-gray-900 dark:text-white
     focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent
     transition-all duration-200
@@ -460,11 +455,19 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
 
   return (
     <section
-      className="scroll-mt-24 py-16 md:py-24 bg-gray-50 dark:bg-gray-800 transition-colors duration-300"
+      className="scroll-mt-24 py-12 md:py-16 bg-gray-50 dark:bg-gray-800 transition-colors duration-300 relative overflow-hidden"
       id="contact-form"
     >
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+      <Image
+        src="/images/form_decoration.svg"
+        alt=""
+        width={300}
+        height={395}
+        className="absolute bottom-0 left-0 opacity-50 pointer-events-none hidden md:block"
+        aria-hidden="true"
+      />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-[0.85fr_1.15fr] gap-8 items-start">
           <FadeIn>
             <div className="md:sticky md:top-32">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -478,13 +481,13 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
           <FadeIn delay={0.2}>
             <motion.form
               onSubmit={handleSubmit}
-              className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-xl dark:shadow-gray-900/20 transition-colors duration-300"
+              className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-xl dark:shadow-gray-900/20 transition-colors duration-300"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div className="space-y-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-4">
+                <div className="space-y-1">
                   {renderLabel(t.labels.commercialName, true)}
                   <p className="text-xs text-gray-500 dark:text-gray-400">{t.subtexts.commercialName}</p>
                   <motion.div className="relative" variants={inputVariants} animate={focusedField === "commercialName" ? "focused" : "unfocused"}>
@@ -512,7 +515,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                   </AnimatePresence>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {renderLabel(t.labels.legalName, true)}
                   <p className="text-xs text-gray-500 dark:text-gray-400">{t.subtexts.legalName}</p>
                   <motion.div className="relative" variants={inputVariants} animate={focusedField === "legalName" ? "focused" : "unfocused"}>
@@ -541,8 +544,8 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div className="space-y-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-4">
+                <div className="space-y-1">
                   {renderLabel(t.labels.contactName, true)}
                   <p className="text-xs text-gray-500 dark:text-gray-400">{t.subtexts.contactName}</p>
                   <motion.div className="relative" variants={inputVariants} animate={focusedField === "contactName" ? "focused" : "unfocused"}>
@@ -570,7 +573,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                   </AnimatePresence>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {renderLabel(t.labels.role, true)}
                   <p className="text-xs text-gray-500 dark:text-gray-400">{t.subtexts.role}</p>
                   <motion.div className="relative" variants={inputVariants} animate={focusedField === "role" ? "focused" : "unfocused"}>
@@ -599,8 +602,8 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div className="space-y-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-4">
+                <div className="space-y-1">
                   {renderLabel(t.labels.email, true)}
                   <p className="text-xs text-gray-500 dark:text-gray-400">{t.subtexts.email}</p>
                   <motion.div className="relative" variants={inputVariants} animate={focusedField === "email" ? "focused" : "unfocused"}>
@@ -628,8 +631,9 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                   </AnimatePresence>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1 flex flex-col">
                   {renderLabel(t.labels.country, true)}
+                  <div className="flex-1" />
                   <motion.div className="relative" variants={inputVariants} animate={focusedField === "country" ? "focused" : "unfocused"}>
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <Globe size={20} className="text-gray-400" />
@@ -662,8 +666,8 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div className="space-y-2">
+              <div className="space-y-4 mb-4">
+                <div className="space-y-1">
                   {renderLabel(t.labels.phone)}
                   <div className="grid grid-cols-5 gap-2">
                     <motion.div className="relative col-span-2" variants={inputVariants} animate={focusedField === "phoneCountry" ? "focused" : "unfocused"}>
@@ -674,7 +678,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                         onChange={handleInputChange}
                         onFocus={() => handleFocus("phoneCountry")}
                         onBlur={handleBlur}
-                        className="block w-full px-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
+                        className="block w-full px-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 truncate"
                       >
                         {countryOptions.map((country) => (
                           <option key={country.iso} value={country.iso}>
@@ -684,9 +688,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                       </select>
                     </motion.div>
                     <motion.div className="relative col-span-3" variants={inputVariants} animate={focusedField === "phone" ? "focused" : "unfocused"}>
-                      <div className="absolute inset-y-0 left-0 px-3 flex items-center text-gray-600 dark:text-gray-300 border-r border-gray-300 dark:border-gray-600">
-                        {phoneDialCode}
-                      </div>
                       <input
                         type="tel"
                         id="phone"
@@ -695,7 +696,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                         onChange={handleInputChange}
                         onFocus={() => handleFocus("phone")}
                         onBlur={handleBlur}
-                        className="block w-full pl-16 pr-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
+                        className="block w-full px-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
                       />
                     </motion.div>
                   </div>
@@ -709,7 +710,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                   </AnimatePresence>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {renderLabel(t.labels.whatsapp)}
                   <div className="grid grid-cols-5 gap-2">
                     <motion.div className="relative col-span-2" variants={inputVariants} animate={focusedField === "whatsappCountry" ? "focused" : "unfocused"}>
@@ -720,7 +721,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                         onChange={handleInputChange}
                         onFocus={() => handleFocus("whatsappCountry")}
                         onBlur={handleBlur}
-                        className="block w-full px-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
+                        className="block w-full px-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 truncate"
                       >
                         {countryOptions.map((country) => (
                           <option key={country.iso} value={country.iso}>
@@ -730,9 +731,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                       </select>
                     </motion.div>
                     <motion.div className="relative col-span-3" variants={inputVariants} animate={focusedField === "whatsapp" ? "focused" : "unfocused"}>
-                      <div className="absolute inset-y-0 left-0 px-3 flex items-center text-gray-600 dark:text-gray-300 border-r border-gray-300 dark:border-gray-600">
-                        {whatsappDialCode}
-                      </div>
                       <input
                         type="tel"
                         id="whatsapp"
@@ -741,7 +739,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                         onChange={handleInputChange}
                         onFocus={() => handleFocus("whatsapp")}
                         onBlur={handleBlur}
-                        className="block w-full pl-16 pr-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
+                        className="block w-full px-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
                       />
                     </motion.div>
                   </div>
@@ -756,7 +754,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                 </div>
               </div>
 
-              <div className="space-y-2 mb-8">
+              <div className="space-y-1 mb-6">
                 {renderLabel(t.labels.message, true)}
                 <p className="text-xs text-gray-500 dark:text-gray-400 whitespace-pre-line">{t.subtexts.message}</p>
                 <motion.div className="relative" variants={inputVariants} animate={focusedField === "message" ? "focused" : "unfocused"}>
@@ -809,7 +807,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                       <AnimatedIcon animation="bounce" trigger="hover">
                         <Send size={20} />
                       </AnimatedIcon>
-                      <span>{t.submitButton}</span>
+                      <span className="handwritten text-2xl">{t.submitButton}</span>
                     </>
                   )}
                 </div>
@@ -829,9 +827,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                 )}
               </AnimatePresence>
 
-              <div className="mt-6 text-center">
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t.footer}</p>
-              </div>
+              <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">{t.footer}</p>
             </motion.form>
           </FadeIn>
         </div>

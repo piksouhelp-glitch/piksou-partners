@@ -5,9 +5,20 @@ export interface ApiResponse<T> {
 }
 
 class ApiService {
-  async sendSupportMessage(payload: Record<string, string>, token?: string): Promise<ApiResponse<unknown>> {
+  private getBaseApiUrl(): string {
+    const rawBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || ""
+    return rawBaseUrl.replace(/\/+$/, "").replace(/\/api$/i, "")
+  }
+
+  private getApiUrl(path: string): string {
+    const normalizedPath = path.startsWith("/") ? path : `/${path}`
+    const baseUrl = this.getBaseApiUrl()
+    return baseUrl ? `${baseUrl}${normalizedPath}` : normalizedPath
+  }
+
+  async sendPartnerContact(payload: Record<string, string>, token?: string): Promise<ApiResponse<unknown>> {
     try {
-      const response = await fetch("/api/support/messages", {
+      const response = await fetch(this.getApiUrl("/api/partners/contact/"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -25,7 +36,7 @@ class ApiService {
       return { data, success: true }
     } catch (error: any) {
       return {
-        error: error.message || "Failed to submit support message. Please try again later.",
+        error: error.message || "Failed to submit partner contact. Please try again later.",
         success: false,
       }
     }
