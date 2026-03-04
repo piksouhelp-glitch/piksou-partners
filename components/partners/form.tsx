@@ -103,14 +103,12 @@ const content = {
       messageRequired: "Message is required",
       messageMin: "Message must be at least 10 characters",
     },
-    requiredText: "Required",
     submitButton: "Submit Partnership Inquiry",
     submitting: "Sending...",
     successTitle: "Inquiry Sent!",
     successMessage: "Thank you, your partnership request has been sent.",
     sendAnother: "Send Another Inquiry",
     footer: "Your information will remain confidential and will only be used to process your partnership request.",
-    messagePrefix: "[Partner Inquiry from",
   },
   fr: {
     title: "C'est",
@@ -165,14 +163,12 @@ const content = {
       messageRequired: "Le message est obligatoire",
       messageMin: "Le message doit comporter au moins 10 caractères",
     },
-    requiredText: "Obligatoire",
     submitButton: "Envoyer ma demande de partenariat",
     submitting: "Envoi en cours...",
     successTitle: "Demande envoyée",
     successMessage: "Merci, votre demande de partenariat a bien été envoyée.",
     sendAnother: "Envoyer une autre demande",
     footer: "Vos informations resteront confidentielles et ne seront utilisées que pour traiter votre demande de partenariat.",
-    messagePrefix: "[Demande de partenariat de",
   },
 }
 
@@ -207,12 +203,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
     () => countryOptions.find((country) => country.iso === formData.whatsappCountry)?.dialCode || "+230",
     [formData.whatsappCountry],
   )
-
-  const getCountryName = (iso: string) => {
-    const match = countryOptions.find((country) => country.iso === iso)
-    if (!match) return iso
-    return locale === "fr" ? match.nameFr : match.nameEn
-  }
 
   const validateField = (name: string, value: string): string | undefined => {
     const plainPhoneRegex = /^[0-9\s\-()]{7,}$/
@@ -329,30 +319,30 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
     setSubmitError(null)
 
     try {
-      const details = [
-        `Nom commercial: ${formData.commercialName}`,
-        `Denomination sociale: ${formData.legalName}`,
-        `Nom du contact: ${formData.contactName}`,
-        `Fonction: ${formData.role}`,
-        `Email: ${formData.email}`,
-        `Pays: ${getCountryName(formData.country)}`,
-        `Telephone: ${formData.phone ? `${phoneDialCode} ${formData.phone}` : "N/A"}`,
-        `WhatsApp: ${formData.whatsapp ? `${whatsappDialCode} ${formData.whatsapp}` : "N/A"}`,
-        "",
-        formData.message,
-      ].join("\n")
-
       const payload: Record<string, string> = {
-        full_name: formData.contactName,
+        commercial_name: formData.commercialName,
+        legal_name: formData.legalName,
+        contact_name: formData.contactName,
+        role: formData.role,
         email: formData.email,
+        country_iso: formData.country,
+        locale: locale,
+        message: formData.message,
         subject: "partnership",
-        message: `${t.messagePrefix} ${formData.commercialName}]\n\n${details}`,
+        phone_country_iso: formData.phoneCountry,
+        phone_dial_code: phoneDialCode,
+        phone_e164_like: formData.phone ? `${phoneDialCode} ${formData.phone}` : "",
+        phone_number: formData.phone,
+        whatsapp_country_iso: formData.whatsappCountry,
+        whatsapp_dial_code: whatsappDialCode,
+        whatsapp_e164_like: formData.whatsapp ? `${whatsappDialCode} ${formData.whatsapp}` : "",
+        whatsapp_number: formData.whatsapp,
       }
 
-      if (formData.phone) {
-        payload.phone = `${phoneDialCode} ${formData.phone}`
+      const result = await apiService.sendPartnerContact(payload)
+      if (!result.success) {
+        throw new Error(result.error || "Failed to submit inquiry")
       }
-
 
       setIsSubmitted(true)
       setFormData({
@@ -414,12 +404,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
   const renderLabel = (label: string, required = false) => (
     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
       {label}
-      {required && (
-        <>
-          <span className="text-red-500 ml-1">!</span>
-          <span className="ml-1 text-xs text-gray-500 dark:text-gray-400">{t.requiredText}</span>
-        </>
-      )}
+      {required && <span className="text-red-500 ml-0.5">*</span>}
     </label>
   )
 
