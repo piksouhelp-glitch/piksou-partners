@@ -21,6 +21,7 @@ interface PartnerFormData {
   phone: string
   whatsappCountry: string
   whatsapp: string
+  subject: string
   message: string
 }
 
@@ -33,6 +34,7 @@ interface PartnerFormErrors {
   country?: string
   phone?: string
   whatsapp?: string
+  subject?: string
   message?: string
 }
 
@@ -63,8 +65,14 @@ const content = {
       country: "Country",
       phone: "Phone",
       whatsapp: "WhatsApp number",
+      subject: "Subject",
       message: "Describe briefly",
       phoneCountry: "Country",
+    },
+    subjectOptions: {
+      partnership: "Partnership",
+      advertising: "Advertising",
+      other: "Other",
     },
     subtexts: {
       commercialName: "Example Supermarket X",
@@ -98,7 +106,9 @@ const content = {
       emailRequired: "Email is required",
       emailInvalid: "Please enter a valid email address",
       countryRequired: "Country is required",
+      phoneRequired: "Phone number is required",
       phoneInvalid: "Please enter a valid phone number",
+      whatsappRequired: "WhatsApp number is required",
       whatsappInvalid: "Please enter a valid WhatsApp number",
       messageRequired: "Message is required",
       messageMin: "Message must be at least 10 characters",
@@ -123,8 +133,14 @@ const content = {
       country: "Pays",
       phone: "Téléphone",
       whatsapp: "Numéro WhatsApp",
+      subject: "Sujet",
       message: "Décrivez brièvement",
       phoneCountry: "Pays",
+    },
+    subjectOptions: {
+      partnership: "Partenariat",
+      advertising: "Publicité",
+      other: "Autre",
     },
     subtexts: {
       commercialName: "Exemple Supermarché X",
@@ -158,7 +174,9 @@ const content = {
       emailRequired: "L'email est obligatoire",
       emailInvalid: "Veuillez entrer une adresse email valide",
       countryRequired: "Le pays est obligatoire",
+      phoneRequired: "Le numéro de téléphone est obligatoire",
       phoneInvalid: "Veuillez entrer un numéro de téléphone valide",
+      whatsappRequired: "Le numéro WhatsApp est obligatoire",
       whatsappInvalid: "Veuillez entrer un numéro WhatsApp valide",
       messageRequired: "Le message est obligatoire",
       messageMin: "Le message doit comporter au moins 10 caractères",
@@ -186,6 +204,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
     phone: "",
     whatsappCountry: "MU",
     whatsapp: "",
+    subject: "partnership",
     message: "",
   })
   const [errors, setErrors] = useState<PartnerFormErrors>({})
@@ -232,9 +251,11 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
         if (!value) return t.errors.countryRequired
         break
       case "phone":
+        if (!value.trim()) return t.errors.phoneRequired
         if (value && !plainPhoneRegex.test(value)) return t.errors.phoneInvalid
         break
       case "whatsapp":
+        if (!value.trim()) return t.errors.whatsappRequired
         if (value && !plainPhoneRegex.test(value)) return t.errors.whatsappInvalid
         break
       case "message":
@@ -277,6 +298,8 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
       "role",
       "email",
       "country",
+      "phone",
+      "whatsapp",
       "message",
     ]
 
@@ -285,22 +308,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
       const error = validateField(key, value)
       if (error) {
         newErrors[key] = error
-        isValid = false
-      }
-    }
-
-    if (formData.phone) {
-      const phoneError = validateField("phone", formData.phone)
-      if (phoneError) {
-        newErrors.phone = phoneError
-        isValid = false
-      }
-    }
-
-    if (formData.whatsapp) {
-      const whatsappError = validateField("whatsapp", formData.whatsapp)
-      if (whatsappError) {
-        newErrors.whatsapp = whatsappError
         isValid = false
       }
     }
@@ -328,7 +335,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
         country_iso: formData.country,
         locale: locale,
         message: formData.message,
-        subject: "partnership",
+        subject: formData.subject,
         phone_country_iso: formData.phoneCountry,
         phone_dial_code: phoneDialCode,
         phone_e164_like: formData.phone ? `${phoneDialCode} ${formData.phone}` : "",
@@ -356,6 +363,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
         phone: "",
         whatsappCountry: "MU",
         whatsapp: "",
+        subject: "partnership",
         message: "",
       })
     } catch (error: any) {
@@ -653,7 +661,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
 
               <div className="space-y-4 mb-4">
                 <div className="space-y-1">
-                  {renderLabel(t.labels.phone)}
+                  {renderLabel(t.labels.phone, true)}
                   <div className="grid grid-cols-5 gap-2">
                     <motion.div className="relative col-span-2" variants={inputVariants} animate={focusedField === "phoneCountry" ? "focused" : "unfocused"}>
                       <select
@@ -696,7 +704,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                 </div>
 
                 <div className="space-y-1">
-                  {renderLabel(t.labels.whatsapp)}
+                  {renderLabel(t.labels.whatsapp, true)}
                   <div className="grid grid-cols-5 gap-2">
                     <motion.div className="relative col-span-2" variants={inputVariants} animate={focusedField === "whatsappCountry" ? "focused" : "unfocused"}>
                       <select
@@ -737,6 +745,28 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                     )}
                   </AnimatePresence>
                 </div>
+              </div>
+
+              <div className="space-y-1 mb-4 w-full md:w-1/2">
+                {renderLabel(t.labels.subject)}
+                <motion.div className="relative" variants={inputVariants} animate={focusedField === "subject" ? "focused" : "unfocused"}>
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Briefcase size={20} className="text-gray-400" />
+                  </div>
+                  <select
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    onFocus={() => handleFocus("subject")}
+                    onBlur={handleBlur}
+                    className={selectClasses("subject")}
+                  >
+                    <option value="partnership">{t.subjectOptions.partnership}</option>
+                    <option value="advertising">{t.subjectOptions.advertising}</option>
+                    <option value="other">{t.subjectOptions.other}</option>
+                  </select>
+                </motion.div>
               </div>
 
               <div className="space-y-1 mb-6">
