@@ -21,7 +21,7 @@ const content = {
     cta: "Contact Us",
     stats: [
       { value: "15", suffix: "+", label: "Stores Listed", icon: "/images/partners/hero/stores-logo.svg" },
-      { value: "6500", suffix: "+", label: "Active Users", icon: "/images/partners/hero/customer-logo.svg" },
+      { value: "10,000", suffix: "+", label: "Active Users", icon: "/images/partners/hero/customer-logo.svg" },
       { value: "5000", suffix: "+", label: "Deals Compared Daily", icon: "/images/partners/hero/partner-logo.svg" },
     ],
   },

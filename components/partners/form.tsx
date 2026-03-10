@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-
+import Image from "next/image"
 import { useMemo, useState } from "react"
 import { motion, AnimatePresence, type Variants } from "framer-motion"
 import { Send, CheckCircle, AlertCircle, User, Mail, MessageSquare, Building2, Briefcase, Globe } from "lucide-react"
@@ -21,6 +21,7 @@ interface PartnerFormData {
   phone: string
   whatsappCountry: string
   whatsapp: string
+  subject: string
   message: string
 }
 
@@ -33,6 +34,7 @@ interface PartnerFormErrors {
   country?: string
   phone?: string
   whatsapp?: string
+  subject?: string
   message?: string
 }
 
@@ -63,8 +65,14 @@ const content = {
       country: "Country",
       phone: "Phone",
       whatsapp: "WhatsApp number",
+      subject: "Subject",
       message: "Describe briefly",
       phoneCountry: "Country",
+    },
+    subjectOptions: {
+      partnership: "Partnership",
+      advertising: "Advertising",
+      other: "Other",
     },
     subtexts: {
       commercialName: "Example Supermarket X",
@@ -98,19 +106,19 @@ const content = {
       emailRequired: "Email is required",
       emailInvalid: "Please enter a valid email address",
       countryRequired: "Country is required",
+      phoneRequired: "Phone number is required",
       phoneInvalid: "Please enter a valid phone number",
+      whatsappRequired: "WhatsApp number is required",
       whatsappInvalid: "Please enter a valid WhatsApp number",
       messageRequired: "Message is required",
       messageMin: "Message must be at least 10 characters",
     },
-    requiredText: "Required",
     submitButton: "Submit Partnership Inquiry",
     submitting: "Sending...",
     successTitle: "Inquiry Sent!",
     successMessage: "Thank you, your partnership request has been sent.",
     sendAnother: "Send Another Inquiry",
     footer: "Your information will remain confidential and will only be used to process your partnership request.",
-    messagePrefix: "[Partner Inquiry from",
   },
   fr: {
     title: "C'est",
@@ -125,8 +133,14 @@ const content = {
       country: "Pays",
       phone: "Téléphone",
       whatsapp: "Numéro WhatsApp",
+      subject: "Sujet",
       message: "Décrivez brièvement",
       phoneCountry: "Pays",
+    },
+    subjectOptions: {
+      partnership: "Partenariat",
+      advertising: "Publicité",
+      other: "Autre",
     },
     subtexts: {
       commercialName: "Exemple Supermarché X",
@@ -160,19 +174,19 @@ const content = {
       emailRequired: "L'email est obligatoire",
       emailInvalid: "Veuillez entrer une adresse email valide",
       countryRequired: "Le pays est obligatoire",
+      phoneRequired: "Le numéro de téléphone est obligatoire",
       phoneInvalid: "Veuillez entrer un numéro de téléphone valide",
+      whatsappRequired: "Le numéro WhatsApp est obligatoire",
       whatsappInvalid: "Veuillez entrer un numéro WhatsApp valide",
       messageRequired: "Le message est obligatoire",
       messageMin: "Le message doit comporter au moins 10 caractères",
     },
-    requiredText: "Obligatoire",
     submitButton: "Envoyer ma demande de partenariat",
     submitting: "Envoi en cours...",
     successTitle: "Demande envoyée",
     successMessage: "Merci, votre demande de partenariat a bien été envoyée.",
     sendAnother: "Envoyer une autre demande",
     footer: "Vos informations resteront confidentielles et ne seront utilisées que pour traiter votre demande de partenariat.",
-    messagePrefix: "[Demande de partenariat de",
   },
 }
 
@@ -190,6 +204,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
     phone: "",
     whatsappCountry: "MU",
     whatsapp: "",
+    subject: "partnership",
     message: "",
   })
   const [errors, setErrors] = useState<PartnerFormErrors>({})
@@ -207,12 +222,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
     () => countryOptions.find((country) => country.iso === formData.whatsappCountry)?.dialCode || "+230",
     [formData.whatsappCountry],
   )
-
-  const getCountryName = (iso: string) => {
-    const match = countryOptions.find((country) => country.iso === iso)
-    if (!match) return iso
-    return locale === "fr" ? match.nameFr : match.nameEn
-  }
 
   const validateField = (name: string, value: string): string | undefined => {
     const plainPhoneRegex = /^[0-9\s\-()]{7,}$/
@@ -242,9 +251,11 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
         if (!value) return t.errors.countryRequired
         break
       case "phone":
+        if (!value.trim()) return t.errors.phoneRequired
         if (value && !plainPhoneRegex.test(value)) return t.errors.phoneInvalid
         break
       case "whatsapp":
+        if (!value.trim()) return t.errors.whatsappRequired
         if (value && !plainPhoneRegex.test(value)) return t.errors.whatsappInvalid
         break
       case "message":
@@ -287,6 +298,8 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
       "role",
       "email",
       "country",
+      "phone",
+      "whatsapp",
       "message",
     ]
 
@@ -295,22 +308,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
       const error = validateField(key, value)
       if (error) {
         newErrors[key] = error
-        isValid = false
-      }
-    }
-
-    if (formData.phone) {
-      const phoneError = validateField("phone", formData.phone)
-      if (phoneError) {
-        newErrors.phone = phoneError
-        isValid = false
-      }
-    }
-
-    if (formData.whatsapp) {
-      const whatsappError = validateField("whatsapp", formData.whatsapp)
-      if (whatsappError) {
-        newErrors.whatsapp = whatsappError
         isValid = false
       }
     }
@@ -329,34 +326,29 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
     setSubmitError(null)
 
     try {
-      const details = [
-        `Nom commercial: ${formData.commercialName}`,
-        `Denomination sociale: ${formData.legalName}`,
-        `Nom du contact: ${formData.contactName}`,
-        `Fonction: ${formData.role}`,
-        `Email: ${formData.email}`,
-        `Pays: ${getCountryName(formData.country)}`,
-        `Telephone: ${formData.phone ? `${phoneDialCode} ${formData.phone}` : "N/A"}`,
-        `WhatsApp: ${formData.whatsapp ? `${whatsappDialCode} ${formData.whatsapp}` : "N/A"}`,
-        "",
-        formData.message,
-      ].join("\n")
-
       const payload: Record<string, string> = {
-        full_name: formData.contactName,
+        commercial_name: formData.commercialName,
+        legal_name: formData.legalName,
+        contact_name: formData.contactName,
+        role: formData.role,
         email: formData.email,
-        subject: "partnership",
-        message: `${t.messagePrefix} ${formData.commercialName}]\n\n${details}`,
+        country_iso: formData.country,
+        locale: locale,
+        message: formData.message,
+        subject: formData.subject,
+        phone_country_iso: formData.phoneCountry,
+        phone_dial_code: phoneDialCode,
+        phone_e164_like: formData.phone ? `${phoneDialCode} ${formData.phone}` : "",
+        phone_number: formData.phone,
+        whatsapp_country_iso: formData.whatsappCountry,
+        whatsapp_dial_code: whatsappDialCode,
+        whatsapp_e164_like: formData.whatsapp ? `${whatsappDialCode} ${formData.whatsapp}` : "",
+        whatsapp_number: formData.whatsapp,
       }
 
-      if (formData.phone) {
-        payload.phone = `${phoneDialCode} ${formData.phone}`
-      }
-
-      const result = await apiService.sendSupportMessage(payload)
-
+      const result = await apiService.sendPartnerContact(payload)
       if (!result.success) {
-        throw new Error(result.error || "Failed to submit inquiry.")
+        throw new Error(result.error || "Failed to submit inquiry")
       }
 
       setIsSubmitted(true)
@@ -371,6 +363,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
         phone: "",
         whatsappCountry: "MU",
         whatsapp: "",
+        subject: "partnership",
         message: "",
       })
     } catch (error: any) {
@@ -409,7 +402,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
 
   const selectClasses = (fieldName: keyof PartnerFormErrors) => `
     block w-full pl-10 pr-3 py-3 border rounded-lg
-    bg-gray-50 dark:bg-gray-700
+    bg-white dark:bg-gray-700
     text-gray-900 dark:text-white
     focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent
     transition-all duration-200
@@ -419,12 +412,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
   const renderLabel = (label: string, required = false) => (
     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
       {label}
-      {required && (
-        <>
-          <span className="text-red-500 ml-1">!</span>
-          <span className="ml-1 text-xs text-gray-500 dark:text-gray-400">{t.requiredText}</span>
-        </>
-      )}
+      {required && <span className="text-red-500 ml-0.5">*</span>}
     </label>
   )
 
@@ -460,11 +448,19 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
 
   return (
     <section
-      className="scroll-mt-24 py-16 md:py-24 bg-gray-50 dark:bg-gray-800 transition-colors duration-300"
+      className="scroll-mt-24 py-12 md:py-16 bg-gray-50 dark:bg-gray-800 transition-colors duration-300 relative overflow-hidden"
       id="contact-form"
     >
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+      <Image
+        src="/images/form_decoration.svg"
+        alt=""
+        width={300}
+        height={395}
+        className="absolute bottom-0 left-0 opacity-50 pointer-events-none hidden md:block"
+        aria-hidden="true"
+      />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-[0.85fr_1.15fr] gap-8 items-start">
           <FadeIn>
             <div className="md:sticky md:top-32">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -478,13 +474,13 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
           <FadeIn delay={0.2}>
             <motion.form
               onSubmit={handleSubmit}
-              className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-xl dark:shadow-gray-900/20 transition-colors duration-300"
+              className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-xl dark:shadow-gray-900/20 transition-colors duration-300"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div className="space-y-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-4">
+                <div className="space-y-1">
                   {renderLabel(t.labels.commercialName, true)}
                   <p className="text-xs text-gray-500 dark:text-gray-400">{t.subtexts.commercialName}</p>
                   <motion.div className="relative" variants={inputVariants} animate={focusedField === "commercialName" ? "focused" : "unfocused"}>
@@ -512,7 +508,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                   </AnimatePresence>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {renderLabel(t.labels.legalName, true)}
                   <p className="text-xs text-gray-500 dark:text-gray-400">{t.subtexts.legalName}</p>
                   <motion.div className="relative" variants={inputVariants} animate={focusedField === "legalName" ? "focused" : "unfocused"}>
@@ -541,8 +537,8 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div className="space-y-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-4">
+                <div className="space-y-1">
                   {renderLabel(t.labels.contactName, true)}
                   <p className="text-xs text-gray-500 dark:text-gray-400">{t.subtexts.contactName}</p>
                   <motion.div className="relative" variants={inputVariants} animate={focusedField === "contactName" ? "focused" : "unfocused"}>
@@ -570,7 +566,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                   </AnimatePresence>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {renderLabel(t.labels.role, true)}
                   <p className="text-xs text-gray-500 dark:text-gray-400">{t.subtexts.role}</p>
                   <motion.div className="relative" variants={inputVariants} animate={focusedField === "role" ? "focused" : "unfocused"}>
@@ -599,8 +595,8 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div className="space-y-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-4">
+                <div className="space-y-1">
                   {renderLabel(t.labels.email, true)}
                   <p className="text-xs text-gray-500 dark:text-gray-400">{t.subtexts.email}</p>
                   <motion.div className="relative" variants={inputVariants} animate={focusedField === "email" ? "focused" : "unfocused"}>
@@ -628,8 +624,9 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                   </AnimatePresence>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1 flex flex-col">
                   {renderLabel(t.labels.country, true)}
+                  <div className="flex-1" />
                   <motion.div className="relative" variants={inputVariants} animate={focusedField === "country" ? "focused" : "unfocused"}>
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <Globe size={20} className="text-gray-400" />
@@ -662,9 +659,9 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div className="space-y-2">
-                  {renderLabel(t.labels.phone)}
+              <div className="space-y-4 mb-4">
+                <div className="space-y-1">
+                  {renderLabel(t.labels.phone, true)}
                   <div className="grid grid-cols-5 gap-2">
                     <motion.div className="relative col-span-2" variants={inputVariants} animate={focusedField === "phoneCountry" ? "focused" : "unfocused"}>
                       <select
@@ -674,7 +671,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                         onChange={handleInputChange}
                         onFocus={() => handleFocus("phoneCountry")}
                         onBlur={handleBlur}
-                        className="block w-full px-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
+                        className="block w-full px-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 truncate"
                       >
                         {countryOptions.map((country) => (
                           <option key={country.iso} value={country.iso}>
@@ -684,9 +681,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                       </select>
                     </motion.div>
                     <motion.div className="relative col-span-3" variants={inputVariants} animate={focusedField === "phone" ? "focused" : "unfocused"}>
-                      <div className="absolute inset-y-0 left-0 px-3 flex items-center text-gray-600 dark:text-gray-300 border-r border-gray-300 dark:border-gray-600">
-                        {phoneDialCode}
-                      </div>
                       <input
                         type="tel"
                         id="phone"
@@ -695,7 +689,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                         onChange={handleInputChange}
                         onFocus={() => handleFocus("phone")}
                         onBlur={handleBlur}
-                        className="block w-full pl-16 pr-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
+                        className="block w-full px-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
                       />
                     </motion.div>
                   </div>
@@ -709,8 +703,8 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                   </AnimatePresence>
                 </div>
 
-                <div className="space-y-2">
-                  {renderLabel(t.labels.whatsapp)}
+                <div className="space-y-1">
+                  {renderLabel(t.labels.whatsapp, true)}
                   <div className="grid grid-cols-5 gap-2">
                     <motion.div className="relative col-span-2" variants={inputVariants} animate={focusedField === "whatsappCountry" ? "focused" : "unfocused"}>
                       <select
@@ -720,7 +714,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                         onChange={handleInputChange}
                         onFocus={() => handleFocus("whatsappCountry")}
                         onBlur={handleBlur}
-                        className="block w-full px-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
+                        className="block w-full px-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 truncate"
                       >
                         {countryOptions.map((country) => (
                           <option key={country.iso} value={country.iso}>
@@ -730,9 +724,6 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                       </select>
                     </motion.div>
                     <motion.div className="relative col-span-3" variants={inputVariants} animate={focusedField === "whatsapp" ? "focused" : "unfocused"}>
-                      <div className="absolute inset-y-0 left-0 px-3 flex items-center text-gray-600 dark:text-gray-300 border-r border-gray-300 dark:border-gray-600">
-                        {whatsappDialCode}
-                      </div>
                       <input
                         type="tel"
                         id="whatsapp"
@@ -741,7 +732,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                         onChange={handleInputChange}
                         onFocus={() => handleFocus("whatsapp")}
                         onBlur={handleBlur}
-                        className="block w-full pl-16 pr-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
+                        className="block w-full px-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
                       />
                     </motion.div>
                   </div>
@@ -756,7 +747,29 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                 </div>
               </div>
 
-              <div className="space-y-2 mb-8">
+              <div className="space-y-1 mb-4 w-full md:w-1/2">
+                {renderLabel(t.labels.subject)}
+                <motion.div className="relative" variants={inputVariants} animate={focusedField === "subject" ? "focused" : "unfocused"}>
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Briefcase size={20} className="text-gray-400" />
+                  </div>
+                  <select
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    onFocus={() => handleFocus("subject")}
+                    onBlur={handleBlur}
+                    className={selectClasses("subject")}
+                  >
+                    <option value="partnership">{t.subjectOptions.partnership}</option>
+                    <option value="advertising">{t.subjectOptions.advertising}</option>
+                    <option value="other">{t.subjectOptions.other}</option>
+                  </select>
+                </motion.div>
+              </div>
+
+              <div className="space-y-1 mb-6">
                 {renderLabel(t.labels.message, true)}
                 <p className="text-xs text-gray-500 dark:text-gray-400 whitespace-pre-line">{t.subtexts.message}</p>
                 <motion.div className="relative" variants={inputVariants} animate={focusedField === "message" ? "focused" : "unfocused"}>
@@ -809,7 +822,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                       <AnimatedIcon animation="bounce" trigger="hover">
                         <Send size={20} />
                       </AnimatedIcon>
-                      <span>{t.submitButton}</span>
+                      <span className="handwritten text-2xl">{t.submitButton}</span>
                     </>
                   )}
                 </div>
@@ -829,9 +842,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                 )}
               </AnimatePresence>
 
-              <div className="mt-6 text-center">
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t.footer}</p>
-              </div>
+              <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">{t.footer}</p>
             </motion.form>
           </FadeIn>
         </div>
