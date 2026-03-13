@@ -4,7 +4,7 @@ import type React from "react"
 import Image from "next/image"
 import { useMemo, useState } from "react"
 import { motion, AnimatePresence, type Variants } from "framer-motion"
-import { Send, CheckCircle, AlertCircle, User, Mail, MessageSquare, Building2, Briefcase, Globe } from "lucide-react"
+import { Send, CheckCircle, AlertCircle, User, Mail, MessageSquare, Building2, Briefcase, Globe, ChevronDown } from "lucide-react"
 import RippleButton from "@/components/micro-interactions/ripple-button"
 import AnimatedIcon from "@/components/micro-interactions/animated-icon"
 import FadeIn from "@/components/animations/fade-in"
@@ -75,7 +75,7 @@ const content = {
       other: "Other",
     },
     subtexts: {
-      commercialName: "Example Supermarket X",
+      commercialName: "Example: Supermarket X",
       legalName: "Official legal company name",
       contactName: "Your first and last name",
       role: "Marketing Manager, Director",
@@ -143,7 +143,7 @@ const content = {
       other: "Autre",
     },
     subtexts: {
-      commercialName: "Exemple Supermarché X",
+      commercialName: "Exemple: Supermarché X",
       legalName: "Nom légal de l'entreprise",
       contactName: "Votre nom et prénom",
       role: "Responsable marketing, Directeur",
@@ -401,9 +401,11 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
   `
 
   const selectClasses = (fieldName: keyof PartnerFormErrors) => `
-    block w-full pl-10 pr-3 py-3 border rounded-lg
-    bg-white dark:bg-gray-700
+    block w-full pl-10 pr-10 py-3 border rounded-lg
+    bg-gray-50 dark:bg-gray-700
     text-gray-900 dark:text-white
+    appearance-none [-webkit-appearance:none] [-moz-appearance:none]
+    [background-image:none]
     focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent
     transition-all duration-200
     ${errors[fieldName] ? "border-red-500" : "border-gray-300 dark:border-gray-600"}
@@ -639,6 +641,7 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                       onFocus={() => handleFocus("country")}
                       onBlur={handleBlur}
                       className={selectClasses("country")}
+                      style={{ WebkitAppearance: "none", MozAppearance: "none", appearance: "none", backgroundImage: "none" }}
                     >
                       <option value="">{t.placeholders.country}</option>
                       {countryOptions.map((country) => (
@@ -647,6 +650,9 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                         </option>
                       ))}
                     </select>
+                    <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <ChevronDown size={18} className="text-gray-400" />
+                    </div>
                   </motion.div>
                   <AnimatePresence>
                     {errors.country && (
@@ -664,6 +670,9 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                   {renderLabel(t.labels.phone, true)}
                   <div className="grid grid-cols-5 gap-2">
                     <motion.div className="relative col-span-2" variants={inputVariants} animate={focusedField === "phoneCountry" ? "focused" : "unfocused"}>
+                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <ChevronDown size={18} className="text-gray-400" />
+                      </div>
                       <select
                         id="phoneCountry"
                         name="phoneCountry"
@@ -671,7 +680,8 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                         onChange={handleInputChange}
                         onFocus={() => handleFocus("phoneCountry")}
                         onBlur={handleBlur}
-                        className="block w-full px-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 truncate"
+                        className="block w-full px-3 pr-10 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 appearance-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 truncate"
+                        style={{ WebkitAppearance: "none", MozAppearance: "none", appearance: "none", backgroundImage: "none" }}
                       >
                         {countryOptions.map((country) => (
                           <option key={country.iso} value={country.iso}>
@@ -707,6 +717,9 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                   {renderLabel(t.labels.whatsapp, true)}
                   <div className="grid grid-cols-5 gap-2">
                     <motion.div className="relative col-span-2" variants={inputVariants} animate={focusedField === "whatsappCountry" ? "focused" : "unfocused"}>
+                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <ChevronDown size={18} className="text-gray-400" />
+                      </div>
                       <select
                         id="whatsappCountry"
                         name="whatsappCountry"
@@ -714,7 +727,8 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                         onChange={handleInputChange}
                         onFocus={() => handleFocus("whatsappCountry")}
                         onBlur={handleBlur}
-                        className="block w-full px-3 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 truncate"
+                        className="block w-full px-3 pr-10 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 appearance-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 truncate"
+                        style={{ WebkitAppearance: "none", MozAppearance: "none", appearance: "none", backgroundImage: "none" }}
                       >
                         {countryOptions.map((country) => (
                           <option key={country.iso} value={country.iso}>
@@ -761,11 +775,15 @@ export default function PartnersPageForm({ locale = "en" }: PartnersPageFormProp
                     onFocus={() => handleFocus("subject")}
                     onBlur={handleBlur}
                     className={selectClasses("subject")}
+                    style={{ WebkitAppearance: "none", MozAppearance: "none", appearance: "none", backgroundImage: "none" }}
                   >
                     <option value="partnership">{t.subjectOptions.partnership}</option>
                     <option value="advertising">{t.subjectOptions.advertising}</option>
                     <option value="other">{t.subjectOptions.other}</option>
                   </select>
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ChevronDown size={18} className="text-gray-400" />
+                  </div>
                 </motion.div>
               </div>
 
