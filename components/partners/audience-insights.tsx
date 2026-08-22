@@ -40,7 +40,7 @@ export default function AudienceInsights({ locale = "en" }: AudienceInsightsProp
   const maxValue = Math.max(...t.ageGroups.map((group) => group.value))
 
   return (
-    <section className="bg-[var(--page-bg)] px-4 pb-28 transition-colors duration-300 sm:px-6 lg:px-8">
+    <section className="bg-(--page-bg) px-4 pb-28 transition-colors duration-300 sm:px-6 lg:px-8">
       <div className="mx-auto grid max-w-5xl grid-cols-1 items-end gap-16 md:grid-cols-2">
         <div>
           <div className="mb-6 flex items-center justify-center gap-2 md:justify-start">
