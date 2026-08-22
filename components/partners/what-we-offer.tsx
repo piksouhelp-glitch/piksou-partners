@@ -1,221 +1,240 @@
-import Image from "next/image";
+"use client"
 
-interface Pillar {
-  iconImage: string;
-  title: string;
-  description: string;
-  image: string;
-}
+import { useEffect, useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
+import { ChevronDown } from "lucide-react"
+import Image from "next/image"
+import DecorativeImage from "@/components/partners/decorative-image"
+import AdvertisementsOffer from "@/components/partners/offers/advertisements-offer"
+import PiksouBusinessOffer from "@/components/partners/offers/piksou-business-offer"
+import RetailIntelligenceOffer from "@/components/partners/offers/retail-intelligence-offer"
+import RewardsCampaignOffer from "@/components/partners/offers/rewards-campaign-offer"
+import SectionHeading from "@/components/partners/section-heading"
 
 interface PillarsProps {
-  locale?: "en" | "fr";
+  locale?: "en" | "fr"
 }
 
-const contentEn = {
-  sectionLabel: "What We Offer",
-  sectionTitle: "Partner with",
-  sectionTitleHighlight: "PikSou",
-  sectionTitleEnd: "and",
-  sectionTitleUnderline: "unlock",
-  sectionSubtitle: "powerful tools to grow your business",
-  pillars: [
-    {
-      iconImage: "/images/partners/what-we-offer/visiblity-icon.png",
-      title: "Increased Visibility",
-      description:
-        "We partner directly with stores to increase visibility of their promotions, drive traffic and generate revenue.",
-      image: "/images/partners/what-we-offer/visiblity.png",
-    },
-    {
-      iconImage: "/images/partners/what-we-offer/stastics-icon.png",
-      title: "Data Analytics & Insights",
-      description:
-        "We provide detailed analytics on key metrics that enable smarter decisions and drive more sales.",
-      image: "/images/partners/what-we-offer/stastics.png",
-    },
-    {
-      iconImage: "/images/partners/what-we-offer/push-notification-icon.png",
-      title: "Push Orders",
-      description:
-        "Users want to order directly from the app. We push orders straight to your e-commerce store.",
-      image: "/images/partners/what-we-offer/push-notification.png",
-    },
-  ] as Pillar[],
-};
+type OfferId = "ads" | "intel" | "rewards" | "business"
 
-const contentFr = {
-  sectionLabel: "Ce Que Nous Offrons",
-  sectionTitle: "Devenez partenaire de",
-  sectionTitleHighlight: "PikSou",
-  sectionTitleEnd: "pour",
-  sectionTitleUnderline: "développer",
-  sectionSubtitle: "votre activité commerciale",
-  pillars: [
-    {
-      iconImage: "/images/partners/what-we-offer/visiblity-icon.png",
-      title: "Visibilité Accrue",
-      description:
-        "Nous collaborons directement avec les magasins pour augmenter la visibilité de leurs promotions et générer du trafic.",
-      image: "/images/partners/what-we-offer/app.svg",
-    },
-    {
-      iconImage: "/images/partners/what-we-offer/stastics-icon.png",
-      title: "Analyses et Données",
-      description:
-        "Nous fournissons des analyses détaillées sur des métriques clés pour des décisions plus éclairées.",
-      image: "/images/partners/what-we-offer/stastics.png",
-    },
-    {
-      iconImage: "/images/partners/what-we-offer/push-notification-icon.png",
-      title: "Commandes Directes",
-      description:
-        "Selon la demande des clients, on pourra bientôt envoyer des commandes directement vers votre magasin.",
-      image: "/images/partners/what-we-offer/push-notification.png",
-    },
-  ] as Pillar[],
-};
+const tabs: Array<{
+  id: OfferId
+  filledIcon: string
+  outlinedIcon: string
+  label: Record<"en" | "fr", string>
+}> = [
+  {
+    id: "ads",
+    filledIcon: "/icons/what-we-offer/megaphone-filled.svg",
+    outlinedIcon: "/icons/what-we-offer/megaphone-outlined.svg",
+    label: { en: "Advertisements", fr: "Publicites" },
+  },
+  {
+    id: "intel",
+    filledIcon: "/icons/what-we-offer/stastics-filled.svg",
+    outlinedIcon: "/icons/what-we-offer/stastics-outlined.svg",
+    label: { en: "Retail Intelligence & Insights", fr: "Retail Intelligence & Insights" },
+  },
+  {
+    id: "rewards",
+    filledIcon: "/icons/what-we-offer/present-filled.svg",
+    outlinedIcon: "/icons/what-we-offer/present-outlined.svg",
+    label: { en: "Rewards Campaign", fr: "Campagne Rewards" },
+  },
+  {
+    id: "business",
+    filledIcon: "/icons/what-we-offer/store-filled.svg",
+    outlinedIcon: "/icons/what-we-offer/store-outlined.svg",
+    label: { en: "PikSou Business", fr: "PikSou Business" },
+  },
+]
+
+const content = {
+  en: {
+    sectionTitle: "What",
+    sectionHighlight: "We Offer",
+  },
+  fr: {
+    sectionTitle: "Ce Que",
+    sectionHighlight: "Nous Offrons",
+  },
+}
+
+function renderOffer(offerId: OfferId, locale: "en" | "fr") {
+  switch (offerId) {
+    case "intel":
+      return <RetailIntelligenceOffer locale={locale} />
+    case "rewards":
+      return <RewardsCampaignOffer locale={locale} />
+    case "business":
+      return <PiksouBusinessOffer locale={locale} />
+    case "ads":
+    default:
+      return <AdvertisementsOffer locale={locale} />
+  }
+}
 
 export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
-  const content = locale === "fr" ? contentFr : contentEn;
+  const t = content[locale]
+  const [activeTab, setActiveTab] = useState<OfferId>("ads")
+  const [isMobileTabOpen, setIsMobileTabOpen] = useState(false)
+  const activeTabConfig = tabs.find((tab) => tab.id === activeTab) ?? tabs[0]
+
+  useEffect(() => {
+    const validOfferIds = new Set<OfferId>(["ads", "intel", "rewards", "business"])
+
+    const activateFromHash = () => {
+      const offerId = window.location.hash.replace("#what-we-offer-", "") as OfferId
+
+      if (validOfferIds.has(offerId)) {
+        setActiveTab(offerId)
+      }
+    }
+
+    const handleOfferTab = (event: Event) => {
+      const offerId = (event as CustomEvent<OfferId>).detail
+
+      if (validOfferIds.has(offerId)) {
+        setActiveTab(offerId)
+      }
+    }
+
+    activateFromHash()
+    window.addEventListener("hashchange", activateFromHash)
+    window.addEventListener("piksou:offer-tab", handleOfferTab)
+
+    return () => {
+      window.removeEventListener("hashchange", activateFromHash)
+      window.removeEventListener("piksou:offer-tab", handleOfferTab)
+    }
+  }, [])
 
   return (
     <section
       id="what-we-offer"
-      className="scroll-mt-24 py-16 md:py-24 bg-white dark:bg-gray-900 transition-colors duration-300 relative overflow-hidden"
+      className="relative scroll-mt-24 overflow-hidden bg-[var(--page-bg)] px-4 py-24 transition-colors duration-300 sm:px-6 lg:px-8"
     >
-      {/* Corner Decorations */}
-      {/* Top Left */}
-      <div className="absolute top-16 left-0 w-20 h-20 md:w-36 md:h-36 pointer-events-none">
-        <Image
-          src="/images/partners/what-we-offer/arrow-decoration-4.svg"
-          alt=""
-          fill
-          className="object-contain"
-          aria-hidden="true"
-        />
-      </div>
+      <DecorativeImage
+        src="/images/partners/what-we-offer/arrow-decoration-1.svg"
+        className="-left-16 bottom-72 h-44 w-44 md:h-72 md:w-72"
+        opacity="opacity-70"
+      />
+      <DecorativeImage
+        src="/images/partners/what-we-offer/arrow-decoration-2.svg"
+        className="-right-16 bottom-28 h-44 w-44 md:h-72 md:w-72"
+        opacity="opacity-70"
+      />
 
-      {/* Top Right */}
-      <div className="absolute top-16 right-0 w-20 h-20 md:w-36 md:h-36 pointer-events-none">
-        <Image
-          src="/images/partners/what-we-offer/arrow-decoration-3.svg"
-          alt=""
-          fill
-          className="object-contain"
-          aria-hidden="true"
-        />
-      </div>
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <SectionHeading title={t.sectionTitle} highlight={t.sectionHighlight} />
 
-      {/* Bottom Left */}
-      <div className="absolute bottom-24 -left-4 md:-left-8 w-32 h-32 md:w-64 md:h-64 pointer-events-none">
-        <Image
-          src="/images/partners/what-we-offer/arrow-decoration-1.svg"
-          alt=""
-          fill
-          className="object-cover object-right"
-          aria-hidden="true"
-        />
-      </div>
-
-      {/* Bottom Right */}
-      <div className="absolute bottom-16 -right-4 md:-right-8 w-32 h-32 md:w-64 md:h-64 pointer-events-none">
-        <Image
-          src="/images/partners/what-we-offer/arrow-decoration-2.svg"
-          alt=""
-          fill
-          className="object-cover object-left"
-          aria-hidden="true"
-        />
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <p className="text-sugarcane-green font-bold dark:text-emerald-400 mb-4 text-xl">
-            {content.sectionLabel}
-          </p>
-          <h2 className="font-sans text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
-            {content.sectionTitle}{" "}
-            <span className="handwritten text-sugarcane-green dark:text-emerald-400">
-              {content.sectionTitleHighlight}
-            </span>{" "}
-            {content.sectionTitleEnd}{" "}
-            <span className="relative inline-block">
-              <span className="handwritten text-sugarcane-green dark:text-emerald-400">
-                {content.sectionTitleUnderline}
-              </span>
-              <svg
-                className="absolute -bottom-1 left-0 w-full"
-                viewBox="0 0 100 8"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M0 7 Q 25 0, 50 4 T 100 3"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  fill="none"
-                  className="text-emerald-400"
+        <div className="relative mx-auto mt-10 max-w-sm md:hidden">
+          <button
+            type="button"
+            onClick={() => setIsMobileTabOpen((prev) => !prev)}
+            className="flex w-full items-center justify-between rounded-full border border-emerald-100 bg-[#f7f8f7] px-5 py-3 text-[#48C774] shadow-[0_8px_24px_rgba(15,79,61,0.08)] dark:border-[var(--border-soft)] dark:bg-[var(--surface-soft)]"
+            aria-expanded={isMobileTabOpen}
+          >
+            <span className="flex items-center gap-3">
+              <span className="relative h-5 w-5">
+                <Image
+                  src={activeTabConfig.filledIcon}
+                  alt=""
+                  fill
+                  className="object-contain"
+                  aria-hidden="true"
                 />
-              </svg>
-            </span>{" "}
-            {content.sectionSubtitle}
-          </h2>
+              </span>
+              <span className="handwritten text-xl font-bold">{activeTabConfig.label[locale]}</span>
+            </span>
+            <ChevronDown
+              size={18}
+              className={`transition-transform duration-200 ${isMobileTabOpen ? "rotate-180" : ""}`}
+            />
+          </button>
+
+          <AnimatePresence>
+            {isMobileTabOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                className="absolute left-0 right-0 top-full z-20 mt-2 rounded-[12px] border border-emerald-100 bg-white py-2 shadow-[0_8px_24px_rgba(15,79,61,0.12)] dark:border-[var(--border-soft)] dark:bg-[var(--surface-bg)]"
+              >
+                {tabs.map((tab) => {
+                  const isActive = activeTab === tab.id
+
+                  return (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      onClick={() => {
+                        setActiveTab(tab.id)
+                        setIsMobileTabOpen(false)
+                      }}
+                      className={`flex w-full items-center gap-3 px-5 py-3 text-left transition-colors ${
+                        isActive ? "text-[#48C774]" : "text-[#075F46] hover:bg-emerald-50 dark:text-[var(--text-body)] dark:hover:bg-emerald-500/10"
+                      }`}
+                    >
+                      <span className="relative h-5 w-5">
+                        <Image
+                          src={isActive ? tab.filledIcon : tab.outlinedIcon}
+                          alt=""
+                          fill
+                          className="object-contain"
+                          aria-hidden="true"
+                        />
+                      </span>
+                      <span className="handwritten text-xl font-bold">{tab.label[locale]}</span>
+                    </button>
+                  )
+                })}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
-        {/* Pillars Grid - middle column is wider */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.4fr_1fr] gap-4 md:gap-6 items-end">
-          {content.pillars.map((pillar, index) => (
-            <div key={index} className="flex flex-col">
-              {/* Icon */}
-              <div className="flex justify-center mb-4">
-                <div className="w-14 h-14 md:w-16 md:h-16 relative">
-                  <Image
-                    src={pillar.iconImage}
-                    alt={pillar.title}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              </div>
-
-              {/* Title */}
-              <h3 className="handwritten text-xl md:text-2xl text-center text-sugarcane-green dark:text-white mb-3">
-                {pillar.title}
-              </h3>
-
-              {/* Description */}
-              <p className="font-sans font-bold text-sm text-center text-gray-400 dark:text-gray-400 mb-6 px-2">
-                {pillar.description}
-              </p>
-
-              {/* Image/Mockup - Middle one is larger */}
-              <div className="flex-1 flex items-end justify-center">
-                <div
-                  className={`relative ${
-                    index === 1
-                      ? "w-full overflow-hidden h-[19rem] md:h-[25rem] lg:h-[30rem] -translate-y-3 md:-translate-y-7 lg:-translate-y-8"
-                      : index === 0
-                      ? "w-full md:w-full lg:w-[108%] h-72 md:h-96 lg:h-[26rem]"
-                      : "w-[92%] md:w-[90%] h-64 md:h-80 lg:h-96"
-                  }`}
-                >
-                  <Image
-                    src={pillar.image}
-                    alt={pillar.title}
-                    fill
-                    className={
-                      index === 1
-                        ? "object-contain scale-[1.1] md:scale-[1.15] lg:scale-[1.18] translate-y-4 md:translate-y-5"
-                        : "object-contain"
-                    }
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                  />
-                </div>
-              </div>
-            </div>
+        <div className="mx-auto mt-12 hidden max-w-5xl flex-wrap justify-center gap-2 rounded-full border border-emerald-100 bg-[#f7f8f7] p-2 shadow-[0_8px_24px_rgba(15,79,61,0.08)] dark:border-[var(--border-soft)] dark:bg-[var(--surface-soft)] md:flex">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex min-h-12 items-center justify-center rounded-full px-5 py-2 text-sm font-black transition-all ${
+                activeTab === tab.id
+                  ? "min-h-16 flex-col gap-1 bg-white text-[#48C774] shadow-[0_8px_24px_rgba(15,79,61,0.12)] dark:bg-[var(--surface-bg)]"
+                  : "flex-row gap-2 text-[#075F46] hover:bg-white/80 dark:text-[var(--text-body)] dark:hover:bg-white/5"
+              }`}
+              aria-pressed={activeTab === tab.id}
+            >
+              <span className="relative h-5 w-5">
+                <Image
+                  src={activeTab === tab.id ? tab.filledIcon : tab.outlinedIcon}
+                  alt=""
+                  fill
+                  className="object-contain"
+                  aria-hidden="true"
+                />
+              </span>
+              <span className="handwritten text-xl font-bold">{tab.label[locale]}</span>
+            </button>
           ))}
+        </div>
+
+        <div className="relative mt-20 min-h-[640px] overflow-visible md:min-h-[720px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ x: 120, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -120, opacity: 0 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="w-full"
+            >
+              {renderOffer(activeTab, locale)}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>
-  );
+  )
 }
