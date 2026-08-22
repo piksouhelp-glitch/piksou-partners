@@ -13,9 +13,8 @@ const content = {
     legal: "Legal & Important",
     links: [
       { href: "#hero", label: "Home" },
+      { href: "#why-piksou", label: "Why Partner" },
       { href: "#what-we-offer", label: "What We Offer" },
-      { href: "#partners-logos", label: "Partners" },
-      { href: "#testimonials", label: "Testimonials" },
       { href: "#contact-form", label: "Contact" },
     ],
     legalLinks: [
@@ -34,9 +33,8 @@ const content = {
     legal: "Légal & Important",
     links: [
       { href: "#hero", label: "Accueil" },
+      { href: "#why-piksou", label: "Pourquoi Partenaire" },
       { href: "#what-we-offer", label: "Nos Offres" },
-      { href: "#partners-logos", label: "Partenaires" },
-      { href: "#testimonials", label: "Témoignages" },
       { href: "#contact-form", label: "Contact" },
     ],
     legalLinks: [
