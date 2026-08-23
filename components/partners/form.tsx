@@ -129,7 +129,7 @@ const content = {
       legalName: "Dénomination sociale",
       contactName: "Nom du contact",
       role: "Fonction",
-      email: "Adresse Email professionnelle",
+      email: "Adresse e-mail professionnelle",
       country: "Pays",
       phone: "Téléphone",
       whatsapp: "Numéro WhatsApp",
@@ -149,7 +149,7 @@ const content = {
       role: "Responsable marketing, Directeur",
       email: "Exemple : prenom@entreprise.mu",
       message:
-        "– ce que vous proposez comme partenariat\n– ce que vous attendez de Piksou\n– votre objectif (visibilité, ventes, acquisition de clients, test de marché, etc.)\nPlus votre message est clair, plus nous pourrons vous répondre efficacement.",
+        "Décrivez brièvement le partenariat que vous proposez, ce que vous attendez de PiKSou, et votre objectif (visibilité, ventes, acquisition de clients, test de marché, etc.).",
     },
     placeholders: {
       commercialName: "Exemple Supermarché X",

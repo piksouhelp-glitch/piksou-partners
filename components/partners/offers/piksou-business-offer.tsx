@@ -22,18 +22,18 @@ const content = {
   },
   fr: {
     brand: "PikSou Direct",
-    title: "Supprimez les intermediaires et ameliorez vos marges.",
+    title: "Supprimez les intermédiaires et améliorez vos marges.",
     cta: "Voir Store",
-    subtitle: "Listez vos produits et vendez directement aux SMEs",
+    subtitle: "Listez vos produits et vendez directement aux PME",
     categories: [
       { image: "/Icons/business/icon-1.svg", label: "Restaurants" },
-      { image: "/Icons/business/icon-2.svg", label: "Organisateurs" },
-      { image: "/Icons/business/icon-3.svg", label: "Cafes" },
+      { image: "/Icons/business/icon-2.svg", label: "Organisateurs d'Événements" },
+      { image: "/Icons/business/icon-3.svg", label: "Cafés" },
       { image: "/Icons/business/icon-4.svg", label: "Pubs" },
-      { image: "/Icons/business/icon-5.svg", label: "Hotels" },
+      { image: "/Icons/business/icon-5.svg", label: "Hôtels" },
     ],
     moreLead: "Et",
-    moreRest: "beaucoup plus...",
+    moreRest: "Bien Plus Encore...",
   },
 }
 

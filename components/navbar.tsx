@@ -39,7 +39,7 @@ const content = {
     localeLabel: "FR",
     menuItems: [
       { href: "#hero", label: "Accueil" },
-      { href: "#why-piksou", label: "Pourquoi Partenaire" },
+      { href: "#why-piksou", label: "Pourquoi Devenir Partenaire" },
       { href: "#what-we-offer", label: "Nos Offres" },
       { href: "#contact-form", label: "Contact" },
     ],
@@ -48,9 +48,9 @@ const content = {
       { href: "/?lang=fr", label: "Français" },
     ],
     offerLinks: [
-      { id: "ads", label: "Publicites" },
-      { id: "intel", label: "Retail Intelligence & Insights" },
-      { id: "rewards", label: "Campagne Rewards" },
+      { id: "ads", label: "Publicités" },
+      { id: "intel", label: "Intelligence et Analyses Retail" },
+      { id: "rewards", label: "Campagne de Récompenses" },
       { id: "business", label: "PikSou Business" },
     ] satisfies Array<{ id: OfferId; label: string }>,
   },

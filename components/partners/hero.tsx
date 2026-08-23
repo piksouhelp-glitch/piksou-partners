@@ -17,7 +17,7 @@ const content = {
     cta: "Contact Us",
   },
   fr: {
-    title: "Touchez les acheteurs",
+    title: "Touchez les aAcheteurs",
     titleLine2: "Avant qu'ils ne décident",
     titleHighlight: "où acheter.",
     subtitle: "PikSou est l'application d'épargne leader à Maurice où les acheteurs actifs cherchent, comparent et planifient leurs achats.",

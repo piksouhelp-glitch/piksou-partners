@@ -29,21 +29,21 @@ const content = {
   },
   fr: {
     title: "Engagez les acheteurs tout au long de leur parcours",
-    subtitle: "TOUCHEZ LES ACHETEURS QUAND ILS SONT PRETS A ACHETER",
+    subtitle: "TOUCHEZ LES ACHETEURS LORSQU'ILS SONT PRÊTS À ACHETER",
     banners: [
       {
         title: "Banniere Hero Page d'Accueil",
-        highlight: "Notoriete Maximale",
+        highlight: "Notoriété Maximale",
         image: "/images/partners/what-we-offer/advertisment-1.svg",
       },
       {
         title: "Banniere Liste de Courses",
-        highlight: "Influence avant checkout",
+        highlight: "Influence Avant le Paiement",
         image: "/images/partners/what-we-offer/advertisment-2.svg",
       },
       {
         title: "Banniere Resultats de Recherche",
-        highlight: "Publicite Contextuelle",
+        highlight: "Publicité Contextuelle",
         image: "/images/partners/what-we-offer/advertisment-1.svg",
       },
     ],

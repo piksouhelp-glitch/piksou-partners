@@ -40,29 +40,29 @@ const content = {
   fr: {
     title: "Pourquoi PikSou?",
     subtitle:
-      "PikSou touche les acheteurs lorsqu'ils recherchent, comparent et decident deja. Votre message apparait au moment precis ou les decisions d'achat sont prises.",
+      "PikSou touche les acheteurs lorsqu'ils sont déjà en train de rechercher, comparer et décider. Votre message apparaît au moment précis où les décisions d'achat sont prises.",
     traditional: {
-      title: "Publicite Traditionnelle",
+      title: "Publicité Traditionnelle",
       tagline: "Interrompt. Rivalise. Est ignoree.",
       items: [
-        { icon: <Tv size={18} />, label: "TV / Radio", desc: "Large portee, mais passive et difficile a mesurer." },
-        { icon: <Users size={18} />, label: "Reseaux Sociaux", desc: "Les gens defilent pour se divertir, pas pour acheter." },
+        { icon: <Tv size={18} />, label: "TV / Radio", desc: "Large portée, mais passive et difficile à mesurer." },
+        { icon: <Users size={18} />, label: "Reseaux Sociaux", desc: "Les gens défilent pour se divertir, pas pour acheter." },
         { icon: <ImageIcon size={18} />, label: "Affichage", desc: "Vu hors contexte avec une faible pertinence." },
-        { icon: <Monitor size={18} />, label: "Panneaux & Print", desc: "Cout eleve et aucune cible d'intention." },
+        { icon: <Monitor size={18} />, label: "Panneaux & Print", desc: "Coût élevé et aucune façon de cibler l'intention." },
       ],
-      footer: "Touche des personnes qui n'acheteront peut-etre jamais, avec des resultats difficiles a suivre.",
+      footer: "Touche des personnes qui n'achèteront peut-être jamais, avec des résultats que vous ne pouvez pas suivre.",
     },
     piksou: {
       title: "PikSou",
-      tagline: "Base sur l'intention. Pertinent. Mesurable.",
+      tagline: "Basé sur l'intention. Pertinent. Mesurable.",
       items: [
-        { icon: <Search size={18} />, label: "Deja en Recherche", desc: "Les acheteurs recherchent produits, marques et categories." },
-        { icon: <Scale size={18} />, label: "Deja en Comparaison", desc: "Ils comparent prix, magasins et promotions." },
-        { icon: <ListTodo size={18} />, label: "Deja en Planification", desc: "Ils ajoutent des articles aux listes de courses." },
-        { icon: <CheckCircle size={18} />, label: "Deja en Decision", desc: "Ils decident ou et quoi acheter." },
-        { icon: <Target size={18} />, label: "Pertinent & Cible", desc: "Affichez vos publicites aux acheteurs interesses." },
+        { icon: <Search size={18} />, label: "Deja en Recherche", desc: "Les acheteurs recherchent des produits, des marques et des catégories." },
+        { icon: <Scale size={18} />, label: "Deja en Comparaison", desc: "Ils comparent les prix, les magasins et les promotions." },
+        { icon: <ListTodo size={18} />, label: "Deja en Planification", desc: "Ils ajoutent des articles à des listes et planifient leurs paniers." },
+        { icon: <CheckCircle size={18} />, label: "Deja en Decision", desc: "Ils décident où et quoi acheter." },
+        { icon: <Target size={18} />, label: "Pertinent & Cible", desc: "Affichez vos publicités uniquement aux acheteurs intéressés." },
       ],
-      footer: "Touche des personnes pretes a acheter, avec des resultats mesurables.",
+      footer: "Touche des personnes prêtes à acheter, avec des résultats mesurables.",
     },
   },
 }

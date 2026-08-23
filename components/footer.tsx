@@ -33,7 +33,7 @@ const content = {
     legal: "Légal & Important",
     links: [
       { href: "#hero", label: "Accueil" },
-      { href: "#why-piksou", label: "Pourquoi Partenaire" },
+      { href: "#why-piksou", label: "Pourquoi Devenir Partenaire" },
       { href: "#what-we-offer", label: "Nos Offres" },
       { href: "#contact-form", label: "Contact" },
     ],
@@ -41,10 +41,10 @@ const content = {
       { href: "#contact-form", label: "Formulaire de Partenariat" },
       { href: "#hero", label: "Haut de Page" },
     ],
-    socialText: "Restez informé des dernières offres et conseils !",
+    socialText: "Restez informé des dernières offres et astuces !",
     madeWith: "Fait avec amour à Maurice",
     trademark:
-      "Toutes les marques de supermarchés appartiennent à leurs propriétaires respectifs. PiKSou est un outil d'économies indépendant.",
+      "Toutes les marques de supermarchés appartiennent à leurs propriétaires respectifs. PiKSou est un outil indépendant pour faire des économies.",
   },
 }
 

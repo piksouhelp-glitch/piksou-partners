@@ -12,20 +12,20 @@ const content = {
     subtitle:
       "Partner with PikSou to reach high-intent shoppers, reward them and turn insights into measurable growth.",
     steps: [
-      { icon: "/Icons/build-together/icon-1.svg", label: "Launch a Pilot Programme" },
+      { icon: "/Icons/build-together/icon-3.svg", label: "Launch a Pilot Programme" },
       { icon: "/Icons/build-together/icon-2.jpg", label: "Select Campaign Objectives" },
       { icon: "/Icons/build-together/icon-3.svg", label: "Measure Real Business Impact" },
     ],
   },
   fr: {
-    title: "Construisons l'avenir de",
-    titleHighlight: "l'intelligence retail ensemble.",
+    title: "Construisons Ensemble l'Avenir de",
+    titleHighlight: "l'Intelligence Retail.",
     subtitle:
-      "Associez-vous a PikSou pour toucher des acheteurs a forte intention, les recompenser et transformer les insights en croissance mesurable.",
+      "Associez-vous à PikSou pour toucher des acheteurs à forte intention, les récompenser et transformer les analyses en croissance mesurable.",
     steps: [
-      { icon: "/Icons/build-together/icon-1.svg", label: "Lancer un programme pilote" },
+      { icon: "/Icons/build-together/icon-3.svg", label: "Lancer un programme pilote" },
       { icon: "/Icons/build-together/icon-2.jpg", label: "Choisir les objectifs campagne" },
-      { icon: "/Icons/build-together/icon-3.svg", label: "Mesurer l'impact business reel" },
+      { icon: "/Icons/build-together/icon-3.svg", label: "Mesurer l'Impact Réel sur l'Entreprise" },
     ],
   },
 }
@@ -77,7 +77,7 @@ export default function RetailFuture({ locale = "en" }: RetailFutureProps) {
                   />
                 </div>
               )}
-              <div className={`relative mb-8 ${index === 2 ? "h-20 w-20" : "h-24 w-24"}`}>
+              <div className="relative mb-8 h-24 w-24">
                 <Image
                   src={step.icon}
                   alt=""

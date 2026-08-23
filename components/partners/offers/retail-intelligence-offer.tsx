@@ -15,11 +15,11 @@ const content = {
   },
   fr: {
     title:
-      "Une suite d'intelligence commerciale pour prendre de meilleures decisions et ameliorer les resultats",
+      "Une suite d'outils d'intelligence commerciale pour prendre de meilleures décisions et améliorer les résultats",
     features: [
-      "Dashboards datasets promotionnels",
-      "Dashboards d'intention client",
-      "Dashboards achats verifies",
+      "Tableaux de bord des données promotionnelles",
+      "Tableaux de bord de l'intention client",
+      "Tableaux de bord des achats vérifiés",
     ],
   },
 }

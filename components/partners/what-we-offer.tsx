@@ -27,7 +27,7 @@ const tabs: Array<{
     id: "ads",
     filledIcon: "/Icons/what-we-offer/megaphone-filled.svg",
     outlinedIcon: "/Icons/what-we-offer/megaphone-outlined.svg",
-    label: { en: "Advertisements", fr: "Publicites" },
+    label: { en: "Advertisements", fr: "Publicités" },
   },
   {
     id: "intel",
@@ -35,14 +35,14 @@ const tabs: Array<{
     outlinedIcon: "/Icons/what-we-offer/stastics-outlined.svg",
     label: {
       en: "Retail Intelligence & Insights",
-      fr: "Retail Intelligence & Insights",
+      fr: "Intelligence et Analyses Retail",
     },
   },
   {
     id: "rewards",
     filledIcon: "/Icons/what-we-offer/present-filled.svg",
     outlinedIcon: "/Icons/what-we-offer/present-outlined.svg",
-    label: { en: "Rewards Campaign", fr: "Campagne Rewards" },
+    label: { en: "Rewards Campaign", fr: "Campagne de Récompenses" },
   },
   {
     id: "business",
@@ -123,7 +123,7 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
   return (
     <section
       id="what-we-offer"
-      className="relative scroll-mt-24 overflow-hidden bg-[var(--page-bg)] px-4 py-24 transition-colors duration-300 sm:px-6 lg:px-8"
+      className="relative scroll-mt-24 overflow-x-clip bg-[var(--page-bg)] px-4 py-24 transition-colors duration-300 sm:px-6 lg:px-8"
     >
       <DecorativeImage
         src="/images/partners/what-we-offer/arrow-decoration-1.svg"
@@ -139,7 +139,7 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
       <div className="relative z-10 mx-auto max-w-7xl">
         <SectionHeading title={t.sectionTitle} highlight={t.sectionHighlight} />
 
-        <div className="relative mx-auto mt-10 max-w-sm md:hidden">
+        <div className="sticky top-20 z-30 mx-auto mt-10 max-w-sm md:hidden">
           <button
             type="button"
             onClick={() => setIsMobileTabOpen((prev) => !prev)}
@@ -213,7 +213,7 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
           </AnimatePresence>
         </div>
 
-        <div className="mx-auto mt-12 hidden max-w-5xl flex-wrap justify-center gap-2 rounded-full border border-emerald-100 bg-[#f7f8f7] p-2 shadow-[0_8px_24px_rgba(15,79,61,0.08)] dark:border-[var(--border-soft)] dark:bg-[var(--surface-soft)] md:flex">
+        <div className="sticky top-20 z-30 mx-auto mt-12 hidden max-w-5xl flex-wrap justify-center gap-2 rounded-full border border-emerald-100 bg-[#f7f8f7]/95 p-2 shadow-[0_8px_24px_rgba(15,79,61,0.08)] backdrop-blur-md dark:border-[var(--border-soft)] dark:bg-[var(--surface-soft)]/95 md:flex">
           {tabs.map((tab) => (
             <button
               key={tab.id}
