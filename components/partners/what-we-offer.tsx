@@ -25,14 +25,14 @@ const tabs: Array<{
 }> = [
   {
     id: "ads",
-    filledIcon: "/icons/what-we-offer/megaphone-filled.svg",
-    outlinedIcon: "/icons/what-we-offer/megaphone-outlined.svg",
+    filledIcon: "/Icons/what-we-offer/megaphone-filled.svg",
+    outlinedIcon: "/Icons/what-we-offer/megaphone-outlined.svg",
     label: { en: "Advertisements", fr: "Publicites" },
   },
   {
     id: "intel",
-    filledIcon: "/icons/what-we-offer/stastics-filled.svg",
-    outlinedIcon: "/icons/what-we-offer/stastics-outlined.svg",
+    filledIcon: "/Icons/what-we-offer/stastics-filled.svg",
+    outlinedIcon: "/Icons/what-we-offer/stastics-outlined.svg",
     label: {
       en: "Retail Intelligence & Insights",
       fr: "Retail Intelligence & Insights",
@@ -40,14 +40,14 @@ const tabs: Array<{
   },
   {
     id: "rewards",
-    filledIcon: "/icons/what-we-offer/present-filled.svg",
-    outlinedIcon: "/icons/what-we-offer/present-outlined.svg",
+    filledIcon: "/Icons/what-we-offer/present-filled.svg",
+    outlinedIcon: "/Icons/what-we-offer/present-outlined.svg",
     label: { en: "Rewards Campaign", fr: "Campagne Rewards" },
   },
   {
     id: "business",
-    filledIcon: "/icons/what-we-offer/store-filled.svg",
-    outlinedIcon: "/icons/what-we-offer/store-outlined.svg",
+    filledIcon: "/Icons/what-we-offer/store-filled.svg",
+    outlinedIcon: "/Icons/what-we-offer/store-outlined.svg",
     label: { en: "PikSou Business", fr: "PikSou Business" },
   },
 ];
