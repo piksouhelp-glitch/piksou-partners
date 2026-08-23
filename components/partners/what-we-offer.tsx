@@ -1,27 +1,27 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { AnimatePresence, motion } from "framer-motion"
-import { ChevronDown } from "lucide-react"
-import Image from "next/image"
-import DecorativeImage from "@/components/partners/decorative-image"
-import AdvertisementsOffer from "@/components/partners/offers/advertisements-offer"
-import PiksouBusinessOffer from "@/components/partners/offers/piksou-business-offer"
-import RetailIntelligenceOffer from "@/components/partners/offers/retail-intelligence-offer"
-import RewardsCampaignOffer from "@/components/partners/offers/rewards-campaign-offer"
-import SectionHeading from "@/components/partners/section-heading"
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
+import Image from "next/image";
+import DecorativeImage from "@/components/partners/decorative-image";
+import AdvertisementsOffer from "@/components/partners/offers/advertisements-offer";
+import PiksouBusinessOffer from "@/components/partners/offers/piksou-business-offer";
+import RetailIntelligenceOffer from "@/components/partners/offers/retail-intelligence-offer";
+import RewardsCampaignOffer from "@/components/partners/offers/rewards-campaign-offer";
+import SectionHeading from "@/components/partners/section-heading";
 
 interface PillarsProps {
-  locale?: "en" | "fr"
+  locale?: "en" | "fr";
 }
 
-type OfferId = "ads" | "intel" | "rewards" | "business"
+type OfferId = "ads" | "intel" | "rewards" | "business";
 
 const tabs: Array<{
-  id: OfferId
-  filledIcon: string
-  outlinedIcon: string
-  label: Record<"en" | "fr", string>
+  id: OfferId;
+  filledIcon: string;
+  outlinedIcon: string;
+  label: Record<"en" | "fr", string>;
 }> = [
   {
     id: "ads",
@@ -33,7 +33,10 @@ const tabs: Array<{
     id: "intel",
     filledIcon: "/icons/what-we-offer/stastics-filled.svg",
     outlinedIcon: "/icons/what-we-offer/stastics-outlined.svg",
-    label: { en: "Retail Intelligence & Insights", fr: "Retail Intelligence & Insights" },
+    label: {
+      en: "Retail Intelligence & Insights",
+      fr: "Retail Intelligence & Insights",
+    },
   },
   {
     id: "rewards",
@@ -47,7 +50,7 @@ const tabs: Array<{
     outlinedIcon: "/icons/what-we-offer/store-outlined.svg",
     label: { en: "PikSou Business", fr: "PikSou Business" },
   },
-]
+];
 
 const content = {
   en: {
@@ -58,56 +61,64 @@ const content = {
     sectionTitle: "Ce Que",
     sectionHighlight: "Nous Offrons",
   },
-}
+};
 
 function renderOffer(offerId: OfferId, locale: "en" | "fr") {
   switch (offerId) {
     case "intel":
-      return <RetailIntelligenceOffer locale={locale} />
+      return <RetailIntelligenceOffer locale={locale} />;
     case "rewards":
-      return <RewardsCampaignOffer locale={locale} />
+      return <RewardsCampaignOffer locale={locale} />;
     case "business":
-      return <PiksouBusinessOffer locale={locale} />
+      return <PiksouBusinessOffer locale={locale} />;
     case "ads":
     default:
-      return <AdvertisementsOffer locale={locale} />
+      return <AdvertisementsOffer locale={locale} />;
   }
 }
 
 export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
-  const t = content[locale]
-  const [activeTab, setActiveTab] = useState<OfferId>("ads")
-  const [isMobileTabOpen, setIsMobileTabOpen] = useState(false)
-  const activeTabConfig = tabs.find((tab) => tab.id === activeTab) ?? tabs[0]
+  const t = content[locale];
+  const [activeTab, setActiveTab] = useState<OfferId>("ads");
+  const [isMobileTabOpen, setIsMobileTabOpen] = useState(false);
+  const activeTabConfig = tabs.find((tab) => tab.id === activeTab) ?? tabs[0];
 
   useEffect(() => {
-    const validOfferIds = new Set<OfferId>(["ads", "intel", "rewards", "business"])
+    const validOfferIds = new Set<OfferId>([
+      "ads",
+      "intel",
+      "rewards",
+      "business",
+    ]);
 
     const activateFromHash = () => {
-      const offerId = window.location.hash.replace("#what-we-offer-", "") as OfferId
+      const offerId = window.location.hash.replace(
+        "#what-we-offer-",
+        ""
+      ) as OfferId;
 
       if (validOfferIds.has(offerId)) {
-        setActiveTab(offerId)
+        setActiveTab(offerId);
       }
-    }
+    };
 
     const handleOfferTab = (event: Event) => {
-      const offerId = (event as CustomEvent<OfferId>).detail
+      const offerId = (event as CustomEvent<OfferId>).detail;
 
       if (validOfferIds.has(offerId)) {
-        setActiveTab(offerId)
+        setActiveTab(offerId);
       }
-    }
+    };
 
-    activateFromHash()
-    window.addEventListener("hashchange", activateFromHash)
-    window.addEventListener("piksou:offer-tab", handleOfferTab)
+    activateFromHash();
+    window.addEventListener("hashchange", activateFromHash);
+    window.addEventListener("piksou:offer-tab", handleOfferTab);
 
     return () => {
-      window.removeEventListener("hashchange", activateFromHash)
-      window.removeEventListener("piksou:offer-tab", handleOfferTab)
-    }
-  }, [])
+      window.removeEventListener("hashchange", activateFromHash);
+      window.removeEventListener("piksou:offer-tab", handleOfferTab);
+    };
+  }, []);
 
   return (
     <section
@@ -145,11 +156,15 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
                   aria-hidden="true"
                 />
               </span>
-              <span className="handwritten text-xl font-bold">{activeTabConfig.label[locale]}</span>
+              <span className="handwritten text-xl font-bold">
+                {activeTabConfig.label[locale]}
+              </span>
             </span>
             <ChevronDown
               size={18}
-              className={`transition-transform duration-200 ${isMobileTabOpen ? "rotate-180" : ""}`}
+              className={`transition-transform duration-200 ${
+                isMobileTabOpen ? "rotate-180" : ""
+              }`}
             />
           </button>
 
@@ -162,18 +177,20 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
                 className="absolute left-0 right-0 top-full z-20 mt-2 rounded-[12px] border border-emerald-100 bg-white py-2 shadow-[0_8px_24px_rgba(15,79,61,0.12)] dark:border-[var(--border-soft)] dark:bg-[var(--surface-bg)]"
               >
                 {tabs.map((tab) => {
-                  const isActive = activeTab === tab.id
+                  const isActive = activeTab === tab.id;
 
                   return (
                     <button
                       key={tab.id}
                       type="button"
                       onClick={() => {
-                        setActiveTab(tab.id)
-                        setIsMobileTabOpen(false)
+                        setActiveTab(tab.id);
+                        setIsMobileTabOpen(false);
                       }}
                       className={`flex w-full items-center gap-3 px-5 py-3 text-left transition-colors ${
-                        isActive ? "text-[#48C774]" : "text-[#075F46] hover:bg-emerald-50 dark:text-[var(--text-body)] dark:hover:bg-emerald-500/10"
+                        isActive
+                          ? "text-[#48C774]"
+                          : "text-[#075F46] hover:bg-emerald-50 dark:text-[var(--text-body)] dark:hover:bg-emerald-500/10"
                       }`}
                     >
                       <span className="relative h-5 w-5">
@@ -185,9 +202,11 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
                           aria-hidden="true"
                         />
                       </span>
-                      <span className="handwritten text-xl font-bold">{tab.label[locale]}</span>
+                      <span className="handwritten text-xl font-bold">
+                        {tab.label[locale]}
+                      </span>
                     </button>
-                  )
+                  );
                 })}
               </motion.div>
             )}
@@ -215,7 +234,9 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
                   aria-hidden="true"
                 />
               </span>
-              <span className="handwritten text-xl font-bold">{tab.label[locale]}</span>
+              <span className="handwritten text-xl font-bold">
+                {tab.label[locale]}
+              </span>
             </button>
           ))}
         </div>
@@ -236,5 +257,5 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
         </div>
       </div>
     </section>
-  )
+  );
 }
