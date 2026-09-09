@@ -83,6 +83,30 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
   const [isMobileTabOpen, setIsMobileTabOpen] = useState(false);
   const activeTabConfig = tabs.find((tab) => tab.id === activeTab) ?? tabs[0];
 
+  const scrollToSectionTop = () => {
+    requestAnimationFrame(() => {
+      const section = document.getElementById("what-we-offer");
+
+      if (!section) return;
+
+      const topOffset = 120;
+      const sectionTop =
+        section.getBoundingClientRect().top + window.scrollY - topOffset;
+
+      window.scrollTo({ top: sectionTop, behavior: "smooth" });
+    });
+  };
+
+  const selectOfferTab = (offerId: OfferId, shouldScroll = true) => {
+    setActiveTab(offerId);
+    setIsMobileTabOpen(false);
+    window.history.replaceState(null, "", `#what-we-offer-${offerId}`);
+
+    if (shouldScroll) {
+      scrollToSectionTop();
+    }
+  };
+
   useEffect(() => {
     const validOfferIds = new Set<OfferId>([
       "ads",
@@ -99,6 +123,7 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
 
       if (validOfferIds.has(offerId)) {
         setActiveTab(offerId);
+        scrollToSectionTop();
       }
     };
 
@@ -106,7 +131,7 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
       const offerId = (event as CustomEvent<OfferId>).detail;
 
       if (validOfferIds.has(offerId)) {
-        setActiveTab(offerId);
+        selectOfferTab(offerId);
       }
     };
 
@@ -123,8 +148,17 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
   return (
     <section
       id="what-we-offer"
-      className="relative scroll-mt-24 overflow-x-clip bg-[var(--page-bg)] px-4 py-24 transition-colors duration-300 sm:px-6 lg:px-8"
+      className="relative scroll-mt-32 overflow-x-clip bg-[var(--page-bg)] px-4 py-24 transition-colors duration-300 sm:px-6 lg:px-8"
     >
+      {tabs.map((tab) => (
+        <span
+          key={`anchor-${tab.id}`}
+          id={`what-we-offer-${tab.id}`}
+          className="absolute top-0 h-px w-px scroll-mt-32 overflow-hidden"
+          aria-hidden="true"
+        />
+      ))}
+
       <DecorativeImage
         src="/images/partners/what-we-offer/arrow-decoration-1.svg"
         className="-left-16 bottom-72 h-44 w-44 md:h-72 md:w-72"
@@ -184,8 +218,7 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
                       key={tab.id}
                       type="button"
                       onClick={() => {
-                        setActiveTab(tab.id);
-                        setIsMobileTabOpen(false);
+                        selectOfferTab(tab.id);
                       }}
                       className={`flex w-full items-center gap-3 px-5 py-3 text-left transition-colors ${
                         isActive
@@ -217,7 +250,7 @@ export default function WhatWeOffer({ locale = "en" }: PillarsProps) {
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => selectOfferTab(tab.id)}
               className={`flex min-h-12 items-center justify-center rounded-full px-5 py-2 text-sm font-black transition-all ${
                 activeTab === tab.id
                   ? "min-h-16 flex-col gap-1 bg-white text-[#48C774] shadow-[0_8px_24px_rgba(15,79,61,0.12)] dark:bg-[var(--surface-bg)]"
