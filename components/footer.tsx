@@ -13,9 +13,8 @@ const content = {
     legal: "Legal & Important",
     links: [
       { href: "#hero", label: "Home" },
+      { href: "#why-piksou", label: "Why Partner" },
       { href: "#what-we-offer", label: "What We Offer" },
-      { href: "#partners-logos", label: "Partners" },
-      { href: "#testimonials", label: "Testimonials" },
       { href: "#contact-form", label: "Contact" },
     ],
     legalLinks: [
@@ -34,19 +33,18 @@ const content = {
     legal: "Légal & Important",
     links: [
       { href: "#hero", label: "Accueil" },
+      { href: "#why-piksou", label: "Pourquoi Devenir Partenaire" },
       { href: "#what-we-offer", label: "Nos Offres" },
-      { href: "#partners-logos", label: "Partenaires" },
-      { href: "#testimonials", label: "Témoignages" },
       { href: "#contact-form", label: "Contact" },
     ],
     legalLinks: [
       { href: "#contact-form", label: "Formulaire de Partenariat" },
       { href: "#hero", label: "Haut de Page" },
     ],
-    socialText: "Restez informé des dernières offres et conseils !",
+    socialText: "Restez informé des dernières offres et astuces !",
     madeWith: "Fait avec amour à Maurice",
     trademark:
-      "Toutes les marques de supermarchés appartiennent à leurs propriétaires respectifs. PiKSou est un outil d'économies indépendant.",
+      "Toutes les marques de supermarchés appartiennent à leurs propriétaires respectifs. PiKSou est un outil indépendant pour faire des économies.",
   },
 }
 
