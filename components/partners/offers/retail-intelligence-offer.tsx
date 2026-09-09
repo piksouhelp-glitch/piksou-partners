@@ -14,15 +14,15 @@ const content = {
     features: [
       {
         title: "Promotion Dataset Dashboard",
-        image: "/images/partners/what-we-offer/analytics-dashboard.svg",
+        image: "/images/partners/what-we-offer/promotional-dataset-dashboard.svg",
       },
       {
         title: "Verified Purchase Dashboard",
-        image: "/images/partners/what-we-offer/data-map.svg",
+        image: "/images/partners/what-we-offer/verified-purchase-dashboard.png",
       },
       {
         title: "Customer Intent Dashboard",
-        image: "/images/partners/what-we-offer/analytics-site.svg",
+        image: "/images/partners/what-we-offer/customer-intent-dashboard.jpeg",
       },
     ],
   },
@@ -33,15 +33,15 @@ const content = {
     features: [
       {
         title: "Tableau de bord des donnees promotionnelles",
-        image: "/images/partners/what-we-offer/analytics-dashboard.svg",
+        image: "/images/partners/what-we-offer/promotional-dataset-dashboard.svg",
       },
       {
         title: "Tableau de bord des achats verifies",
-        image: "/images/partners/what-we-offer/data-map.svg",
+        image: "/images/partners/what-we-offer/verified-purchase-dashboard.png",
       },
       {
         title: "Tableau de bord de l'intention client",
-        image: "/images/partners/what-we-offer/analytics-site.svg",
+        image: "/images/partners/what-we-offer/customer-intent-dashboard.jpeg",
       },
     ],
   },
@@ -80,7 +80,7 @@ export default function RetailIntelligenceOffer({ locale = "en" }: RetailIntelli
           ))}
         </div>
 
-        <div className="relative h-[360px] w-full md:h-[500px]">
+        <div className="relative h-[385px] w-full pt-9 md:h-[540px] md:pt-12">
           <div className="handwritten absolute left-1/2 top-0 z-10 -translate-x-1/2 text-center text-3xl font-bold leading-none text-[#087157] drop-shadow-sm dark:text-[var(--text-main)] md:text-5xl">
             {t.comingSoon}
           </div>
@@ -89,7 +89,7 @@ export default function RetailIntelligenceOffer({ locale = "en" }: RetailIntelli
             src={activeFeature.image}
             alt={activeFeature.title}
             fill
-            className="object-contain object-center drop-shadow-xl"
+            className="object-contain object-bottom drop-shadow-xl"
             sizes="(max-width: 1024px) 90vw, 720px"
           />
         </div>
