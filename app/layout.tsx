@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono, Caveat } from "next/font/google"
+import localFont from "next/font/local"
 import "./globals.css"
 
 const geistSans = Geist({
@@ -16,6 +17,21 @@ const caveat = Caveat({
   variable: "--font-caveat",
   subsets: ["latin"],
   weight: ["400", "600", "700"],
+})
+
+const norwester = localFont({
+  src: "../public/fonts/norwester/norwester.woff",
+  variable: "--font-norwester",
+  weight: "400",
+})
+
+const poppins = localFont({
+  src: [
+    { path: "../public/fonts/poppins/Poppins-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../public/fonts/poppins/Poppins-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "../public/fonts/poppins/Poppins-Bold.ttf", weight: "700", style: "normal" },
+  ],
+  variable: "--font-poppins",
 })
 
 export const metadata: Metadata = {
@@ -37,7 +53,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} ${norwester.variable} ${poppins.variable} antialiased`}>
         {children}
       </body>
     </html>
