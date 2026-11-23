@@ -13,7 +13,7 @@ const content = {
       "Partner with PikSou to reach high-intent shoppers, reward them and turn insights into measurable growth.",
     steps: [
       { icon: "/Icons/build-together/icon-3.svg", label: "Launch a Pilot Programme" },
-      { icon: "/Icons/build-together/icon-2.jpg", label: "Select Campaign Objectives" },
+      { icon: "/Icons/build-together/icon-2.png", label: "Select Campaign Objectives" },
       { icon: "/Icons/build-together/icon-3.svg", label: "Measure Real Business Impact" },
     ],
   },
@@ -24,7 +24,7 @@ const content = {
       "Associez-vous à PikSou pour toucher des acheteurs à forte intention, les récompenser et transformer les analyses en croissance mesurable.",
     steps: [
       { icon: "/Icons/build-together/icon-3.svg", label: "Lancer un programme pilote" },
-      { icon: "/Icons/build-together/icon-2.jpg", label: "Choisir les objectifs campagne" },
+      { icon: "/Icons/build-together/icon-2.png", label: "Choisir les objectifs campagne" },
       { icon: "/Icons/build-together/icon-3.svg", label: "Mesurer l'Impact Réel sur l'Entreprise" },
     ],
   },
