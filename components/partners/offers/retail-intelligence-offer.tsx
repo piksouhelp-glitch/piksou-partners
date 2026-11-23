@@ -14,11 +14,11 @@ const content = {
     features: [
       {
         title: "Promotion Dataset Dashboard",
-        image: "/images/partners/what-we-offer/promotional-dataset-dashboard.svg",
+        image: "/images/partners/what-we-offer/promotional-dataset-dashboard.png",
       },
       {
-        title: "Verified Purchase Dashboard",
-        image: "/images/partners/what-we-offer/verified-purchase-dashboard.png",
+        title: "Visibility Campaign Report",
+        image: "/images/partners/what-we-offer/visibility-campaign-report.png",
       },
       {
         title: "Customer Intent Dashboard",
@@ -33,11 +33,11 @@ const content = {
     features: [
       {
         title: "Tableau de bord des donnees promotionnelles",
-        image: "/images/partners/what-we-offer/promotional-dataset-dashboard.svg",
+        image: "/images/partners/what-we-offer/promotional-dataset-dashboard.png",
       },
       {
-        title: "Tableau de bord des achats verifies",
-        image: "/images/partners/what-we-offer/verified-purchase-dashboard.png",
+        title: "Rapport de campagne de visibilité",
+        image: "/images/partners/what-we-offer/visibility-campaign-report.png",
       },
       {
         title: "Tableau de bord de l'intention client",
@@ -67,14 +67,16 @@ export default function RetailIntelligenceOffer({ locale = "en" }: RetailIntelli
               onClick={() => setActiveFeatureIndex(index)}
               className={`block w-full text-left font-norwester text-2xl font-black uppercase leading-tight transition-colors duration-200 md:text-3xl ${
                 index === activeFeatureIndex
-                  ? "text-[#087157] underline decoration-[#087157] dark:text-[var(--text-main)] dark:decoration-[var(--text-main)]"
+                  ? "text-[#087157] dark:text-[var(--text-main)]"
                   : "text-neutral-500 hover:text-[#087157] dark:text-[var(--text-muted)] dark:hover:text-[var(--text-main)]"
               }`}
               aria-pressed={index === activeFeatureIndex}
             >
               <span>
                 {index === activeFeatureIndex && <span className="mr-3 text-[#087157] dark:text-[var(--text-main)]">&gt;</span>}
-                {feature.title}
+                <span className={index === activeFeatureIndex ? "underline decoration-[#087157] dark:decoration-[var(--text-main)]" : undefined}>
+                  {feature.title}
+                </span>
               </span>
             </button>
           ))}
